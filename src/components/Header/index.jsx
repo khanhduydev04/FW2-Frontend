@@ -28,7 +28,7 @@ const Header = () => {
           </button>
         </div>
         <div className="grid place-content-center content-center mt-3 transition-[opacity] duration-300 md:place-content-start">
-          <a className="text-3xl text-white font-bold" href="/">
+          <a className="text-2xl md:text-3xl text-white font-bold " href="/">
             PHARMARTIST
           </a>
         </div>

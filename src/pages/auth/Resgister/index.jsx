@@ -1,6 +1,7 @@
 const RegisterPage = () => {
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex h-screen items-center justify-center px-6 py-12 lg:px-8 bg-gray-100">
+      <div className="w-2/5 py-10 bg-white shadow-lg rounded-lg">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="font-bold text-3xl text-green-600 text-center">
           <a href="/">Pharmartist</a>
@@ -110,6 +111,7 @@ const RegisterPage = () => {
             Đăng nhập
           </a>
         </p>
+      </div>
       </div>
     </div>
   );

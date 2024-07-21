@@ -66,7 +66,7 @@ const CartPage = () => {
                         <div className="bg-white p-4 rounded-md mb-3">
                             <div className="flex items-center justify-between">
                                 <div className="font-medium">Khuyến mãi</div>
-                                <button className="text-blue-400 text-sm">Chọn mã</button>
+                                <button className="text-green-400 text-sm">Chọn mã</button>
                             </div>
                         </div>
                         <div className="bg-white p-4 rounded-md">
@@ -87,7 +87,7 @@ const CartPage = () => {
                                 <div className="font-medium">Tổng tiền</div>
                                 <div className="font-bold text-2xl text-red-500">376.200 ₫</div>
                             </div>
-                            <button className="bg-blue-700 hover:bg-blue-500 rounded-md w-full py-3 font-medium text-white">Mua hàng (1)</button>
+                            <button className="bg-green-700 hover:bg-green-500 rounded-md w-full py-3 font-medium text-white">Mua hàng (1)</button>
                         </div>
                     </div>
                 </div>
