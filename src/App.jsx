@@ -7,12 +7,17 @@ import DashboardPage from "./pages/admin/DashboardPage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import CartPage from "./pages/client/CartPage";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <CIientLayout />,
-    children: [{ path: "", element: <HomePage /> }],
+    children: [
+      { path: "", element: <HomePage /> },
+      { path: "gio-hang", element: <CartPage /> },
+
+    ],
   },
   {
     path: "/admin",
