@@ -74,7 +74,7 @@ const LoginPage = () => {
           Chưa có tài khoản?
           <a
             href="/tai-khoan/dang-ky"
-            className="font-semibold leading-6 text-green-600-600 hover:text-green-600-500"
+            className="font-semibold leading-6 text-green-600 hover:text-green-500"
           >
             Tạo tài khoản mới
           </a>
