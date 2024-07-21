@@ -8,6 +8,7 @@ import NotFoundPage from "./pages/NotFound/NotFoundPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CartPage from "./pages/client/CartPage";
+import ProductPage from "./pages/client/ProductPage";
 
 const routes = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const routes = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "gio-hang", element: <CartPage /> },
-
+      { path: "san-pham", element: <ProductPage /> }
     ],
   },
   {
