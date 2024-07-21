@@ -1,0 +1,17 @@
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: inherit !important;
+}
+
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}
