@@ -21,6 +21,8 @@ import AddCatagoryPage from "./pages/admin/Category/AddCatagoryPage";
 import EditCatagoryPage from "./pages/admin/Category/EditCategoryPage";
 import AddProductPage from "./pages/admin/Product/AddProductPage";
 import EditProductPage from "./pages/admin/Product/EditProductPage";
+import LoginPage from "./pages/auth/Login";
+import RegisterPage from "./pages/auth/Resgister";
 
 const routes = createBrowserRouter([
   {
@@ -88,6 +90,19 @@ const routes = createBrowserRouter([
             element: <AddProductPage />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: "tai-khoan",
+    children: [
+      {
+        path: "dang-nhap",
+        element: <LoginPage />,
+      },
+      {
+        path: "dang-ky",
+        element: <RegisterPage />,
       },
     ],
   },

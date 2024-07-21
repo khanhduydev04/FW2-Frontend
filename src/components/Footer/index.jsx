@@ -1,31 +1,31 @@
 const Footer = () => {
   return (
     <>
-      <footer>
+      <footer className="bg-gray-50 mt-5">
         <div className="container mx-auto px-10 pt-10 pb-3">
           <div className="grid grid-cols-12 border-b pb-3">
             <div className="col-span-12 md:col-span-3">
               <ul className="space-y-4 font-medium">
                 <li className="text-gray-600">Về chúng tôi</li>
-                <li className="text-blue-600">
+                <li className="text-green-600">
                   <a href="#">Giới thiệu</a>
                 </li>
-                <li className="text-blue-600">
+                <li className="text-green-600">
                   <a href="#">Hệ thống cửa hàng</a>
                 </li>
-                <li className="text-blue-600">
+                <li className="text-green-600">
                   <a href="#">Giấy phép kinh doanh</a>
                 </li>
-                <li className="text-blue-600">
+                <li className="text-green-600">
                   <a href="#">Chính sách đổi trả</a>
                 </li>
-                <li className="text-blue-600">
+                <li className="text-green-600">
                   <a href="">Chính sách mua hàng</a>
                 </li>
-                <li className="text-blue-600">
+                <li className="text-green-600">
                   <a href="#">Chính sách nội dung</a>
                 </li>
-                <li className="text-blue-600">
+                <li className="text-green-600">
                   <a href="#">Chính sách thanh toán</a>
                 </li>
               </ul>
@@ -33,13 +33,13 @@ const Footer = () => {
             <div className="col-span-12 md:col-span-3">
               <ul className="space-y-4 font-medium">
                 <li className="text-gray-600">Về chúng tôi</li>
-                <li className="text-blue-600">Giới thiệu</li>
-                <li className="text-blue-600">Hệ thống cửa hàng</li>
-                <li className="text-blue-600">Giấy phép kinh doanh</li>
-                <li className="text-blue-600">Chính sách đổi trả</li>
-                <li className="text-blue-600">Chính sách mua hàng</li>
-                <li className="text-blue-600">Chính sách nội dung</li>
-                <li className="text-blue-600">Chính sách thanh toán</li>
+                <li className="text-green-600">Giới thiệu</li>
+                <li className="text-green-600">Hệ thống cửa hàng</li>
+                <li className="text-green-600">Giấy phép kinh doanh</li>
+                <li className="text-green-600">Chính sách đổi trả</li>
+                <li className="text-green-600">Chính sách mua hàng</li>
+                <li className="text-green-600">Chính sách nội dung</li>
+                <li className="text-green-600">Chính sách thanh toán</li>
               </ul>
             </div>
             <div className="col-span-12 md:col-span-3">
@@ -48,7 +48,8 @@ const Footer = () => {
                 <li className="text-gray-600">
                   <p className="text-gray-700">Tư vấn mua hàng</p>
                   <span className="">
-                    <span className="text-blue-600">0912022074 </span> (Nhánh 1)
+                    <span className="text-green-600">0912022074 </span> (Nhánh
+                    1)
                   </span>
                 </li>
                 <li className="text-gray-600">Chứng nhận bởi</li>

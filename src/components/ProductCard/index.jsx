@@ -1,9 +1,6 @@
 const ProductCard = () => {
   return (
-    <a
-      className="product-card"
-      href="/nuoc-suc-mieng-thai-duong-valentine-500ml.html"
-    >
+    <a className="product-card" href="/chi-tiet-san-pham">
       <div className="h-full overflow-hidden rounded-lg border bg-white pb-[1px] shadow-sm">
         <div className="product-card-image">
           <div>
@@ -26,7 +23,7 @@ const ProductCard = () => {
           </div>
           <div className="my-1 items-center whitespace-nowrap">
             <del className="block h-5 text-sm font-semibold text-neutral-600"></del>
-            <span className="mt-[2px] block h-6 text-base font-bold text-blue-500">
+            <span className="mt-[2px] block h-6 text-base font-bold text-green-600">
               41.000&nbsp;₫/Chai
             </span>
             <div className="mb-2 flex items-center py-1 text-sm">

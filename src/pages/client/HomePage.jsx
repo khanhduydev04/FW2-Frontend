@@ -79,7 +79,7 @@ const HomePage = () => {
         <div className="px-3 pb-4 md:container">
           <SectionHeading
             title={"Siêu Deals Online"}
-            url={"/sanpham"}
+            url={"/san-pham"}
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
@@ -93,7 +93,7 @@ const HomePage = () => {
         <div className="px-3 pb-4 md:container">
           <SectionHeading
             title={"Top bán chạy toàn quốc"}
-            url={"/sanpham"}
+            url={"/san-pham"}
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
@@ -107,7 +107,7 @@ const HomePage = () => {
         <div className="px-3 pb-4 md:container">
           <SectionHeading
             title={"Vi vu hè không sợ nắng"}
-            url={"/sanpham"}
+            url={"/san-pham"}
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
@@ -121,7 +121,7 @@ const HomePage = () => {
         <div className="px-3 pb-4 md:container">
           <SectionHeading
             title={"Sản phẩm bán chạy"}
-            url={"/sanpham"}
+            url={"/san-pham"}
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">

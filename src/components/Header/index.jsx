@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="bg-[#3F85EA]">
+    <header className="bg-green-600">
       <div className="container mx-auto grid grid-cols-[40px_1fr_40px] grid-rows-[40px] content-center pt-1.5 pb-2 md:grid-cols-[200px_1fr_270px] md:grid-rows-[56px] md:pt-4 md:pb-[44px]">
         <div className="grid place-content-start content-center md:hidden">
           <button
@@ -27,19 +27,18 @@ const Header = () => {
             </svg>
           </button>
         </div>
-        <div className="grid place-content-center content-center transition-[opacity] duration-300 md:place-content-start">
-          <a href="/">
-            <img
-              src="https://cms-prod.s3-sgn09.fptcloud.com/smalls/Logo_LC_Default_2e36f42b6b.svg"
-              alt="Pharmartist"
-              className="h-[28px] w-[100px] !bg-transparent !bg-none object-contain md:h-[56px] md:w-[183px]"
-            />
+        <div className="grid place-content-center content-center mt-3 transition-[opacity] duration-300 md:place-content-start">
+          <a className="text-3xl text-white font-bold" href="/">
+            PHARMARTIST
           </a>
         </div>
         <div className="grid place-content-end content-center md:col-start-3 md:col-end-4 md:place-content-stretch">
           <div className="flex h-full items-center justify-between">
             <div className="hidden md:flex items-center">
-              <div className="flex items-center cursor-pointer text-white">
+              <a
+                href="/tai-khoan/dang-nhap"
+                className="flex items-center cursor-pointer text-white"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -54,11 +53,11 @@ const Header = () => {
                 </svg>
 
                 <div className="ml-2 font-medium">Đăng nhập</div>
-              </div>
+              </a>
             </div>
             <div className="cart-mini relative shrink-0 md:ml-auto css-62ialb">
               <a
-                className="inline-flex items-center justify-center w-10 h-10 bg-[#1250dc] rounded-full md:w-[134px] md:h-[48px] md:rounded-[42px]"
+                className="inline-flex items-center justify-center w-10 h-10 bg-white rounded-full md:w-[134px] md:h-[48px] md:rounded-[42px]"
                 href="/gio-hang"
               >
                 <div className="relative">
@@ -74,13 +73,13 @@ const Header = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="size-5 md:size-6"
+                      className="size-5 md:size-6 text-green-600"
                     >
                       <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
                     </svg>
                   </span>
                 </div>
-                <span className="hidden md:block font-medium text-white ml-2">
+                <span className="hidden md:block font-medium  text-green-600 ml-2">
                   Giỏ hàng
                 </span>
               </a>
@@ -113,7 +112,7 @@ const Header = () => {
                     ></path>
                   </svg>
                 </button>
-                <button className="shrink-0 rounded-full bg-[#c1d0f6] text-text-focus size-7 p-1.5 md:size-10 md:p-[12px] ml-3 text-[#1250dc] peer-focus:bg-[#1250dc] peer-focus:text-white transition-colors">
+                <button className="shrink-0 rounded-full bg-green-100 text-text-focus size-7 p-1.5 md:size-10 md:p-[12px] ml-3 text-green-600 peer-focus:bg-green-600 peer-focus:text-white transition-colors">
                   <svg
                     width="100%"
                     height="100%"
@@ -178,14 +177,14 @@ const Header = () => {
         </div>
       </div>
       <div className="container hidden md:flex justify-center items-center gap-x-10 pb-4 font-medium text-white">
-        <NavLink to={"/"}>Thuốc</NavLink>
-        <NavLink to={"/"}>Thực phẩm chức năng</NavLink>
-        <NavLink to={"/"}>Dược mỹ phẩm</NavLink>
-        <NavLink to={"/"}>Mẹ và bé</NavLink>
-        <NavLink to={"/"}>Chăm sóc cá nhân</NavLink>
-        <NavLink to={"/"}>Thiết bị y tế</NavLink>
-        <NavLink to={"/"}>Bệnh</NavLink>
-        <NavLink to={"/"}>Góc sức khỏe</NavLink>
+        <NavLink to={"/san-pham"}>Thuốc</NavLink>
+        <NavLink to={"/san-pham"}>Thực phẩm chức năng</NavLink>
+        <NavLink to={"/san-pham"}>Dược mỹ phẩm</NavLink>
+        <NavLink to={"/san-pham"}>Mẹ và bé</NavLink>
+        <NavLink to={"/san-pham"}>Chăm sóc cá nhân</NavLink>
+        <NavLink to={"/san-pham"}>Thiết bị y tế</NavLink>
+        <NavLink to={"/san-pham"}>Bệnh</NavLink>
+        <NavLink to={"/san-pham"}>Góc sức khỏe</NavLink>
       </div>
     </header>
   );
