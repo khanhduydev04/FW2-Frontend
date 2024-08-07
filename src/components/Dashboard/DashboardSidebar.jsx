@@ -20,7 +20,7 @@ const sidebarLinks = [
   {
     icon: <IconPayment></IconPayment>,
     title: "Sản phẩm",
-    url: "/admin/product",
+    url: "/admin/products",
   },
   {
     icon: <IconWithdraw></IconWithdraw>,

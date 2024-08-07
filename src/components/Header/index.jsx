@@ -1,6 +1,22 @@
 import { NavLink } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { getTokens } from "../../utils/auth";
+import { useDispatch } from "react-redux";
+import { authLogOut } from "../../store/reducers/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  let username = "";
+  if (getTokens().accessToken) {
+    username = jwtDecode(getTokens().accessToken).username || "";
+  }
+  const handleLogout = () => {
+    dispatch(authLogOut());
+    navigate("/");
+  };
+
   return (
     <header className="bg-green-600">
       <div className="container mx-auto grid grid-cols-[40px_1fr_40px] grid-rows-[40px] content-center pt-1.5 pb-2 md:grid-cols-[200px_1fr_270px] md:grid-rows-[56px] md:pt-4 md:pb-[44px]">
@@ -35,25 +51,39 @@ const Header = () => {
         <div className="grid place-content-end content-center md:col-start-3 md:col-end-4 md:place-content-stretch">
           <div className="flex h-full items-center justify-between">
             <div className="hidden md:flex items-center">
-              <a
-                href="/tai-khoan/dang-nhap"
-                className="flex items-center cursor-pointer text-white"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6"
+              {username ? (
+                <div className="flex items-center">
+                  <span className="text-white mr-2">Xin chào {username}</span>
+                  <button
+                    className="text-white"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              ) : (
+                <a
+                  href="/tai-khoan/dang-nhap"
+                  className="flex items-center cursor-pointer text-white"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
 
-                <div className="ml-2 font-medium">Đăng nhập</div>
-              </a>
+                  <div className="ml-2 font-medium">Đăng nhập</div>
+                </a>
+              )}
             </div>
             <div className="cart-mini relative shrink-0 md:ml-auto css-62ialb">
               <a

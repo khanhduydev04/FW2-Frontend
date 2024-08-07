@@ -6,28 +6,28 @@ import Slider from "../../components/Slider";
 const brands = [
   {
     id: 1,
-    url: "https://www.pharmacity.vn/collection/cham-da-cung-la-roche-posay",
+    url: "/san-pham",
     imageUrl:
       "https://prod-cdn.pharmacity.io/e-com/images/banners/20240626083710-0-Web_Larocheposay_287x232.png",
     name: "La Roche Posay",
   },
   {
     id: 2,
-    url: "https://www.pharmacity.vn/collection/san-pham-cetaphil",
+    url: "/san-pham",
     imageUrl:
       "https://prod-cdn.pharmacity.io/e-com/images/banners/20240626084423-0-Web%20Cetaphil287x232.png",
     name: "Cetaphil",
   },
   {
     id: 3,
-    url: "https://www.pharmacity.vn/collection/kudos--khoe-trong-dep-ngoai",
+    url: "/san-pham",
     imageUrl:
       "https://prod-cdn.pharmacity.io/e-com/images/banners/20240626083425-0-App%20Kudos_129x129.png",
     name: "Kudos",
   },
   {
     id: 4,
-    url: "https://www.pharmacity.vn/collection/thuong-hieu-noi-bat-senka",
+    url: "/san-pham",
     imageUrl:
       "https://prod-cdn.pharmacity.io/e-com/images/banners/20240626084149-0-WebSenka_287x232.png",
     name: "Senka",
@@ -45,7 +45,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="hidden w-full grid-rows-2 gap-4 md:grid md:w-[32.4%]">
-            <a href="https://pharmacity.vn/chao-don-phien-ban-moi-ung-dung-suc-khoe-toan-nang-pharmacity.htm?utm_source=web&amp;utm_medium=topright&amp;utm_campaign=PMC-chao-don-ung-dung-toan-nang">
+            <a href="/san-pham">
               <div className="h-full w-full">
                 <img
                   className="h-full w-full object-[unset] md:rounded-xl"
@@ -58,7 +58,7 @@ const HomePage = () => {
                 />
               </div>
             </a>
-            <a href="https://www.pharmacity.vn/mieng-dan-lanh-pharmacity-cool-patch-mat-lanh-giam-dau-14x10cm-tui-2-mieng.html?utm_source=web&amp;utm_medium=topright&amp;utm_campaign=pmce-cool-patch">
+            <a href="/san-pham">
               <div className="h-full w-full">
                 <img
                   className="h-full w-full object-[unset] md:rounded-xl"
@@ -136,7 +136,7 @@ const HomePage = () => {
           <SectionHeading title={"Thương hiệu bán chạy"}></SectionHeading>
           <div className="grid grid-cols-3 grid-rows-2 md:grid-cols-4 md:gap-3">
             <div className="z-[1] row-span-2 -mr-1 pr-1 md:col-span-2 md:mr-0 md:h-auto md:pr-0">
-              <a href="https://www.pharmacity.vn/collection/bao-deal-ngan-uu-dai">
+              <a href="/san-pham">
                 <picture>
                   <source
                     media="(max-width:767px)"

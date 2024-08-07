@@ -2,7 +2,7 @@ const AccountPage = () => {
   return (
     <main className="bg-white rounded-xl py-10 px-[66px]">
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="relative h-[585px]">
+        <div className="relative min-h-[585px]">
           <div className="px-4">
             <div className="sm:flex sm:items-center">
               <div className="flex-auto">

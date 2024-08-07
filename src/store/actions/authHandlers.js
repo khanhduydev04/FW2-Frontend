@@ -46,7 +46,7 @@ function* handleAuthRegister({ payload }) {
 
 function* handleAuthRefreshToken({ payload }) {
   try {
-    const response = yield call(refreshToken);
+    const response = yield call(refreshToken, payload);
     if (response.data.accessToken) {
       saveTokens(response.data.accessToken, payload);
       const decoded = jwtDecode(response.data.accessToken);
@@ -60,7 +60,7 @@ function* handleAuthRefreshToken({ payload }) {
         authUpdateUser({
           user,
           accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
+          refreshToken: payload,
         })
       );
     } else {

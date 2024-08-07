@@ -78,7 +78,7 @@ const routes = createBrowserRouter([
         ],
       },
       {
-        path: "product",
+        path: "products",
         children: [
           {
             path: "",
@@ -96,8 +96,8 @@ const routes = createBrowserRouter([
       },
       {
         path: "quan-ly-don-hang",
-        element: <OderPage/>
-      }
+        element: <OderPage />,
+      },
     ],
   },
   {

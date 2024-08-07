@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { getTokens } from "../../utils/auth";
 
 const API_BASE_URL = "http://localhost:8080/api";
+
+const { accessToken } = getTokens();
+
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -14,9 +16,26 @@ const axiosInstanceWithAuth = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${getTokens().accessToken}`,
+    Authorization: `Bearer ${accessToken}`,
   },
 });
 
+const requestWithAuthAndCustomHeaders = (
+  url = "",
+  method = "GET",
+  data = {},
+  headers = {}
+) => {
+  return axiosInstanceWithAuth({
+    url,
+    method,
+    data,
+    headers: {
+      ...axiosInstance.defaults.headers,
+      ...headers,
+    },
+  });
+};
+
 export default axiosInstance;
-export { axiosInstanceWithAuth };
+export { axiosInstanceWithAuth, requestWithAuthAndCustomHeaders };
