@@ -24,6 +24,7 @@ import EditProductPage from "./pages/admin/Product/EditProductPage";
 import LoginPage from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/Resgister";
 import PayPage from "./pages/client/PayPage";
+import OderPage from "./pages/admin/Oder/OderPage";
 
 const routes = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const routes = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "quan-ly-don-hang",
+        element: <OderPage/>
+      }
     ],
   },
   {
