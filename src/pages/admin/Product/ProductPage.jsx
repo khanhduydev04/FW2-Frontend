@@ -31,6 +31,9 @@ const AdminProductPage = () => {
             setPage(page - 1);
         }
     };
+    const handlePageClick = (page) =>{
+        setPage(page);
+    }
     return (
         <main className="bg-white rounded-xl py-10 px-[66px]">
             <div className="px-4 sm:px-6 lg:px-8">

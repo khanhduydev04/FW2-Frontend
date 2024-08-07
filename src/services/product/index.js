@@ -25,3 +25,26 @@ export const addProduct = async (data) => {
         return null;
     }
 }
+export const getProductById = async (id) => {
+    try {
+        const res = await axiosInstance.get(`/products/${id}`);
+        return res;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+export const updateProduct = async (id, data) => {    
+    try {
+        const res = await axios.patch(`http://localhost:8080/api/products/${id}`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${getTokens().accessToken}`,
+            }
+        });
+        return res;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
