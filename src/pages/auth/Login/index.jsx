@@ -1,6 +1,52 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { authLogin } from "../../../store/reducers/authSlice";
+import { useEffect } from "react";
+
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const auth = useSelector((state) => state.auth);
+
+  const schemaValidation = yup.object({
+    username: yup
+      .string()
+      .required("Thông tin bắt buộc. Vui lòng nhập đầy đủ."),
+    password: yup
+      .string()
+      .required("Thông tin bắt buộc. Vui lòng nhập đầy đủ.")
+      .min(6, "Mật khẩu phải có ít nhất 6 ký tự."),
+  });
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schemaValidation),
+  });
+
+  const handleLogin = (values) => {
+    try {
+      dispatch(authLogin(values));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (auth.user && auth.user.username) {
+      auth.user.role === "admin" ? navigate("/admin") : navigate("/");
+      console.log("auth:", auth);
+    }
+  }, [auth, navigate]);
+
   return (
-    <div className="flex justify-center items-center h-screen px-6 py-12 lg:px-8 bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen px-6 py-12 lg:px-8 bg-gray-100">
       <div className=" w-2/5 py-10 rounded-lg bg-white shadow-md">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h1 className="font-bold text-3xl text-green-600 text-center">
@@ -12,7 +58,7 @@ const LoginPage = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit(handleLogin)}>
             <div>
               <label
                 htmlFor="username"
@@ -25,13 +71,21 @@ const LoginPage = () => {
                   id="username"
                   name="username"
                   type="text"
-                  autoComplete="username"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600-600 sm:text-sm sm:leading-6"
+                  className={`block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    errors.username
+                      ? "ring-red-500 bg-red-50 focus:ring-red-500"
+                      : "ring-gray-300 bg-white focus:ring-green-600"
+                  } focus:outline-none sm:text-sm sm:leading-6`}
+                  placeholder="Username"
+                  {...register("username")}
                 />
+                {errors?.username && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.username?.message}
+                  </p>
+                )}
               </div>
             </div>
-
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -54,19 +108,32 @@ const LoginPage = () => {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600-600 sm:text-sm sm:leading-6"
+                  className={`block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    errors.password
+                      ? "ring-red-500 bg-red-50 focus:ring-red-500"
+                      : "ring-gray-300 bg-white focus:ring-green-600"
+                  } focus:outline-none sm:text-sm sm:leading-6`}
+                  placeholder="Mât khẩu"
+                  {...register("password")}
                 />
+                {errors?.password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password?.message}
+                  </p>
+                )}
               </div>
             </div>
 
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-700"
               >
-                Đăng nhập
+                {isSubmitting ? (
+                  <div className="mx-auto w-5 h-5 border-2 border-white border-t-2 border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  "Đăng nhập"
+                )}
               </button>
             </div>
           </form>
@@ -75,7 +142,7 @@ const LoginPage = () => {
             Chưa có tài khoản?
             <a
               href="/tai-khoan/dang-ky"
-              className="font-semibold leading-6 text-green-600 hover:text-green-500"
+              className="inline-block ml-2 font-semibold leading-6 text-green-600 hover:text-green-500"
             >
               Tạo tài khoản mới
             </a>
