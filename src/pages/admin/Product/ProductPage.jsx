@@ -5,23 +5,31 @@ import {Link} from "react-router-dom";
 
 const AdminProductPage = () => {
     const [products, setProducts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(1);
-    useEffect(() => {
-        fetchProducts(currentPage);
-    }, [currentPage]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-    const fetchProducts = async (page) => {
+    useEffect(() => {
+        fetchProducts();
+    }, [page]);
+
+    const fetchProducts = async () => {
         const response = await getProducts(page);
         if (response) {
             setProducts(response.data.data.products);
-            setTotalPage(response.data.data.totalPage);
-            console.log(response.data);
+            setTotalPages(response.data.data.totalPages);
         }
     };
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    const handleNextPage = () => {
+        if (page < totalPages) {
+            setPage(page + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (page > 1) {
+            setPage(page - 1);
+        }
     };
     return (
         <main className="bg-white rounded-xl py-10 px-[66px]">
@@ -118,29 +126,29 @@ const AdminProductPage = () => {
                         </div>
                         <div className="mt-4 flex justify-center">
                             <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                                className="px-4 py-2 mx-1 bg-gray-300 rounded disabled:opacity-50"
+                                onClick={handlePreviousPage}
+                                disabled={page === 1}
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
                             >
-                                Previous
+                                Trước
                             </button>
-                            {[...Array(totalPage)].map((_, index) => (
+                            {Array.from({length: totalPages}, (_, index) => (
                                 <button
-                                    key={index}
-                                    onClick={() => handlePageChange(index + 1)}
+                                    key={index + 1}
+                                    onClick={() => handlePageClick(index + 1)}
                                     className={`px-4 py-2 mx-1 ${
-                                        currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-300"
-                                    }`}
+                                        page === index + 1 ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-700"
+                                    } rounded-md`}
                                 >
                                     {index + 1}
                                 </button>
                             ))}
                             <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPage}
-                                className="px-4 py-2 mx-1 bg-gray-300 rounded disabled:opacity-50"
+                                onClick={handleNextPage}
+                                disabled={page === totalPages}
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"
                             >
-                                Next
+                                Tiếp theo
                             </button>
                         </div>
                     </div>
