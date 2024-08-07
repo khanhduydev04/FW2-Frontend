@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {getProducts} from "../../../services/product";
+import {deleteProduct, getProducts} from "../../../services/product";
 import {useEffect} from "react";
 import {Link} from "react-router-dom";
 
@@ -31,9 +31,20 @@ const AdminProductPage = () => {
             setPage(page - 1);
         }
     };
-    const handlePageClick = (page) =>{
+    const handlePageClick = (page) => {
         setPage(page);
-    }
+    };
+    const handleDelete = (id) => {
+        if (window.confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
+            deleteProduct(id)
+                .then((result) => {
+                    console.log(result);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
     return (
         <main className="bg-white rounded-xl py-10 px-[66px]">
             <div className="px-4 sm:px-6 lg:px-8">
@@ -116,9 +127,13 @@ const AdminProductPage = () => {
                                                         >
                                                             Sửa
                                                         </Link>
-                                                        <span className="text-red-600 hover:text-red-800 ml-4 cursor-pointer btn-delete">
+                                                        <button
+                                                            type="button"
+                                                            className="text-red-600 hover:text-red-800 ml-4 cursor-pointer btn-delete"
+                                                            onClick={() => handleDelete(products?._id)}
+                                                        >
                                                             Xóa
-                                                        </span>
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ))}

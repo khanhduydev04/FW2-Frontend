@@ -48,3 +48,17 @@ export const updateProduct = async (id, data) => {
         return null;
     }
 }
+export const deleteProduct = async (id) => {    
+    try {
+        const res = await axios.delete(`http://localhost:8080/api/products/${id}` ,{
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${getTokens().accessToken}`,
+            }
+        });
+        return res;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
