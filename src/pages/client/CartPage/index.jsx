@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import CartItem from "./CartItem"
 
 const CartPage = () => {
@@ -87,7 +88,9 @@ const CartPage = () => {
                                 <div className="font-medium">Tổng tiền</div>
                                 <div className="font-bold text-2xl text-red-500">376.200 ₫</div>
                             </div>
-                            <button className="bg-green-700 hover:bg-green-500 rounded-md w-full py-3 font-medium text-white">Mua hàng (1)</button>
+                            <Link to={'/thanh-toan'}>
+                                <button className="bg-green-700 hover:bg-green-500 rounded-md w-full py-3 font-medium text-white">Mua hàng (1)</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

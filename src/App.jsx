@@ -23,6 +23,7 @@ import AddProductPage from "./pages/admin/Product/AddProductPage";
 import EditProductPage from "./pages/admin/Product/EditProductPage";
 import LoginPage from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/Resgister";
+import PayPage from "./pages/client/PayPage";
 
 const routes = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const routes = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "gio-hang", element: <CartPage /> },
+      { path: "thanh-toan", element: <PayPage /> },
       { path: "san-pham", element: <ProductPage /> },
       { path: "chi-tiet-san-pham", element: <ProductDetail /> },
     ],
