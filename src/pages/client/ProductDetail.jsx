@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Modal from "../../components/Modal";
-import CommentItem from "../../components/Comment/CommentItem";
+// import CommentItem from "../../components/Comment/CommentItem";
 import CommentList from "../../components/Comment/CommentList";
 
 export const ProductDetail = () => {
@@ -215,22 +215,25 @@ export const ProductDetail = () => {
             <div className="hidden md:block md:col-span-3 p-3">
               <ul className="divide-y" id="product_describe">
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "describe" ? "bg-gray-300" : ""
-                    }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
+                    activeId === "describe" ? "bg-gray-300" : ""
+                  }`}
                   onClick={() => handleNavClick("describe")}
                 >
                   Mô tả
                 </li>
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "use" ? "bg-gray-300" : ""
-                    }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
+                    activeId === "use" ? "bg-gray-300" : ""
+                  }`}
                   onClick={() => handleNavClick("use")}
                 >
                   Công dụng
                 </li>
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "preserve" ? "bg-gray-300" : ""
-                    }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
+                    activeId === "preserve" ? "bg-gray-300" : ""
+                  }`}
                   onClick={() => handleNavClick("preserve")}
                 >
                   Bảo quản
@@ -310,87 +313,95 @@ export const ProductDetail = () => {
                     icon={faStar}
                   />
                 </p>
-              </p>`
-              <button className="rounded-lg py-3 px-10 bg-green-600 text-lg text-white" onClick={() => setIsShow(true)}>
+              </p>
+              `
+              <button
+                className="rounded-lg py-3 px-10 bg-green-600 text-lg text-white"
+                onClick={() => setIsShow(true)}
+              >
                 Đánh giá
               </button>
             </div>
             <div className="">
-              <CommentList/>
+              <CommentList />
             </div>
           </div>
         </div>
       </section>
-      <Modal isShow={isShow} title="Đánh giá sản phẩm" onClose={() => setIsShow(false)} >
+      <Modal
+        isShow={isShow}
+        title="Đánh giá sản phẩm"
+        onClose={() => setIsShow(false)}
+      >
         <div className="">
-        <form>
-              <div className="gap-x-4 md:flex">
-                <div className="basis-2/4">
-                  <div data-lc-component="input" className="w-full">
-                    <div className="group relative z-0 flex-1 w-full">
-                      <input
-                        type="text"
-                        id=":rt:"
-                        className="outline-none box-border w-full pl-4 rounded-lg border border-solid  h-[56px] pr-4"
-                        placeholder="Nhập họ và tên"
-                        maxLength="60"
-                        name="name"
-                        value=""
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-4 basis-2/4 md:mt-0">
-                  <div data-lc-component="input" className="w-full basis-2/4">
-                    <div className="relative z-0 flex-1 w-full">
-                      <input
-                        type="tel"
-                        id=":ru:"
-                        className="outline-none box-border w-full pl-4 rounded-lg border h-[56px] pr-4"
-                        placeholder="Nhập số điện thoại"
-                        maxLength="10"
-                        name="phone"
-                        value=""
-                      />
-                    </div>
+          <form>
+            <div className="gap-x-4 md:flex">
+              <div className="basis-2/4">
+                <div data-lc-component="input" className="w-full">
+                  <div className="group relative z-0 flex-1 w-full">
+                    <input
+                      type="text"
+                      id=":rt:"
+                      className="outline-none box-border w-full pl-4 rounded-lg border border-solid  h-[56px] pr-4"
+                      placeholder="Nhập họ và tên"
+                      maxLength="60"
+                      name="name"
+                      value=""
+                    />
                   </div>
                 </div>
               </div>
-              <div data-lc-component="input" className="mt-4 w-full basis-2/4">
-                <div className="group relative z-0 flex-1 w-full">
-                  <input
-                    type="email"
-                    id=":rv:"
-                    className="peer outline-none box-border w-full pl-4 rounded-lg border border-solid h-[56px] pr-4"
-                    placeholder="Nhập email"
-                    name="email"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div data-lc-component="textarea" className="mt-4">
-                <div className="flex-1 w-full">
-                  <div className="flex flex-col-reverse justify-end box-border rounded-lg border border-solid py-[11px] h-[120px] bg-field-default-active disabled:!bg-field-default-disable border-stroke-default focus-within:border-stroke-focus disabled:!border-field-default-disable">
-                    <textarea
-                      id=":r10:"
-                      rows="10"
-                      className="outline-none w-full px-4 font-normal text-justify"
-                      placeholder="Nhập nội dung trả lời (Vui lòng gõ tiếng Việt có dấu)..."
-                      maxlength="150"
-                      name="content"
-                    ></textarea>
+              <div className="mt-4 basis-2/4 md:mt-0">
+                <div data-lc-component="input" className="w-full basis-2/4">
+                  <div className="relative z-0 flex-1 w-full">
+                    <input
+                      type="tel"
+                      id=":ru:"
+                      className="outline-none box-border w-full pl-4 rounded-lg border h-[56px] pr-4"
+                      placeholder="Nhập số điện thoại"
+                      maxLength="10"
+                      name="phone"
+                      value=""
+                    />
                   </div>
                 </div>
               </div>
-              <div className="pt-4">
-                <button
-                  className="w-full py-3 text-lg text-white bg-green-600 rounded-full"
-                  type="submit"
-                >
-                  Gửi
-                </button>
+            </div>
+            <div data-lc-component="input" className="mt-4 w-full basis-2/4">
+              <div className="group relative z-0 flex-1 w-full">
+                <input
+                  type="email"
+                  id=":rv:"
+                  className="peer outline-none box-border w-full pl-4 rounded-lg border border-solid h-[56px] pr-4"
+                  placeholder="Nhập email"
+                  name="email"
+                  value=""
+                />
               </div>
-            </form>
+            </div>
+            <div data-lc-component="textarea" className="mt-4">
+              <div className="flex-1 w-full">
+                <div className="flex flex-col-reverse justify-end box-border rounded-lg border border-solid py-[11px] h-[120px] bg-field-default-active disabled:!bg-field-default-disable border-stroke-default focus-within:border-stroke-focus disabled:!border-field-default-disable">
+                  <textarea
+                    id=":r10:"
+                    rows="10"
+                    className="outline-none w-full px-4 font-normal text-justify"
+                    placeholder="Nhập nội dung trả lời (Vui lòng gõ tiếng Việt có dấu)..."
+                    maxLength="150"
+                    name="content"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div className="pt-4">
+              <button
+                className="w-full py-3 text-lg text-white bg-green-600 rounded-full"
+                type="submit"
+              >
+                Gửi
+              </button>
+            </div>
+          </form>
         </div>
       </Modal>
     </>
