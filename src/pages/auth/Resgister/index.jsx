@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { authRegister } from "../../../store/reducers/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const RegisterPage = () => {
@@ -202,12 +202,12 @@ const RegisterPage = () => {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Đã có tài khoản?
-            <a
-              href="/tai-khoan/dang-nhap"
+            <Link
+              to={"/tai-khoan/dang-nhap"}
               className="inline-block ml-2 font-semibold leading-6 text-green-600 hover:text-green-500"
             >
               Đăng nhập
-            </a>
+            </Link>
           </p>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -8,7 +9,7 @@ import { Navigation } from "swiper/modules";
 import ProductCard from "../ProductCard";
 import { useRef } from "react";
 
-const ProductSlider = () => {
+const ProductSlider = ({ products }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -49,13 +50,14 @@ const ProductSlider = () => {
         }}
         className="h-full"
       >
-        {Array(10)
-          .fill(null)
-          .map((_, index) => (
-            <SwiperSlide key={index}>
-              <ProductCard></ProductCard>
-            </SwiperSlide>
-          ))}
+        {products.map((product, index) => (
+          <SwiperSlide
+            key={index}
+            className="!h-auto !w-[178px] pb-[1px] md:!w-[192px]"
+          >
+            <ProductCard product={product}></ProductCard>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <div
         ref={prevRef}
@@ -67,6 +69,10 @@ const ProductSlider = () => {
       ></div>
     </div>
   );
+};
+
+ProductSlider.propTypes = {
+  products: PropTypes.array,
 };
 
 export default ProductSlider;

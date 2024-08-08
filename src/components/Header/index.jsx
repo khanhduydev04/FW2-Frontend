@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { getTokens } from "../../utils/auth";
 import { useDispatch } from "react-redux";
@@ -54,9 +54,9 @@ const Header = () => {
           </button>
         </div>
         <div className="grid place-content-center content-center mt-3 transition-[opacity] duration-300 md:place-content-start">
-          <a className="text-2xl md:text-3xl text-white font-bold " href="/">
+          <Link className="text-2xl md:text-3xl text-white font-bold " to={"/"}>
             PHARMARTIST
-          </a>
+          </Link>
         </div>
         <div className="grid place-content-end content-center md:col-start-3 md:col-end-4 md:place-content-stretch">
           <div className="flex h-full items-center justify-between">
@@ -85,8 +85,8 @@ const Header = () => {
                   )}
                 </div>
               ) : (
-                <a
-                  href="/tai-khoan/dang-nhap"
+                <Link
+                  to={"/tai-khoan/dang-nhap"}
                   className="flex items-center cursor-pointer text-white"
                 >
                   <svg
@@ -103,7 +103,7 @@ const Header = () => {
                   </svg>
 
                   <div className="ml-2 font-medium">Đăng nhập</div>
-                </a>
+                </Link>
               )}
             </div>
             <div className="cart-mini relative shrink-0 md:ml-auto css-62ialb">
@@ -182,44 +182,28 @@ const Header = () => {
               <div className="hidden md:block md:absolute md:left-[-100px] md:right-[-100px] md:text-center md:whitespace-nowrap md:overflow-hidden md:mx-auto md:mt-1">
                 <ul className="flex items-center text-white md:gap-4 md:justify-center text-sm">
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=dung+d%E1%BB%8Bch+v%E1%BB%87+sinh">
-                      dung dịch vệ sinh
-                    </a>
+                    <Link to={"/"}>dung dịch vệ sinh</Link>
                   </li>
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=men+vi+sinh">
-                      men vi sinh
-                    </a>
+                    <Link to={"/"}>men vi sinh</Link>
                   </li>
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=s%E1%BB%AFa+r%E1%BB%ADa+m%E1%BA%B7t">
-                      sữa rửa mặt
-                    </a>
+                    <Link to={"/"}>sữa rửa mặt</Link>
                   </li>
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=k%E1%BA%BDm">
-                      kẽm
-                    </a>
+                    <Link to={"/"}>kẽm</Link>
                   </li>
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=kem+ch%E1%BB%91ng+n%E1%BA%AFng">
-                      kem chống nắng
-                    </a>
+                    <Link to={"/"}>kem chống nắng</Link>
                   </li>
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=D3k2">
-                      D3k2
-                    </a>
+                    <Link to={"/"}>D3k2</Link>
                   </li>
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=canxi">
-                      canxi
-                    </a>
+                    <Link to={"/"}>canxi</Link>
                   </li>
                   <li className="item">
-                    <a href="https://nhathuoclongchau.com.vn/tim-kiem?s=Dhc">
-                      Dhc
-                    </a>
+                    <Link to={"/"}>Dhc</Link>
                   </li>
                 </ul>
               </div>

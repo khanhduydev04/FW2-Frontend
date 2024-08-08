@@ -1,19 +1,34 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../components/Modal";
-// import CommentItem from "../../components/Comment/CommentItem";
 import CommentList from "../../components/Comment/CommentList";
+import { useParams } from "react-router-dom";
+import { getProductById } from "../../services/product";
+import { formatCurrency } from "../../utils/common";
 
 export const ProductDetail = () => {
   const [activeId, setActiveId] = useState("describe");
   const [isShow, setIsShow] = useState(false);
+  const [product, setProduct] = useState({});
+  const { id } = useParams();
 
   const handleNavClick = (id) => {
     setActiveId(id);
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const fetchProduct = async () => {
+    const res = await getProductById(id);
+    if (res) {
+      setProduct(res.data.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
 
   return (
     <>
@@ -24,40 +39,24 @@ export const ProductDetail = () => {
               <div className="w-full p-6 sticky top-0">
                 <div className="p-5">
                   <img
-                    src="https://cdn.nhathuoclongchau.com.vn/unsafe/375x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_05612_2244c1f439.jpg"
+                    src={product.images?.[0]?.url}
                     className="w-full"
-                    alt=""
+                    alt={product.name}
                   />
                 </div>
                 <div className="flex justify-center align-middle gap-4">
-                  <div className="border rounded-xl">
-                    <img
-                      src="https://cdn.nhathuoclongchau.com.vn/unsafe/375x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_05612_2244c1f439.jpg"
-                      className="w-auto rounded-xl"
-                      alt=""
-                    />
-                  </div>
-                  <div className="border rounded-xl">
-                    <img
-                      src="https://cdn.nhathuoclongchau.com.vn/unsafe/375x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_05612_2244c1f439.jpg"
-                      className="w-auto rounded-xl"
-                      alt=""
-                    />
-                  </div>
-                  <div className="border rounded-xl">
-                    <img
-                      src="https://cdn.nhathuoclongchau.com.vn/unsafe/375x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_05612_2244c1f439.jpg"
-                      className="w-auto rounded-xl"
-                      alt=""
-                    />
-                  </div>
-                  <div className="border rounded-xl">
-                    <img
-                      src="https://cdn.nhathuoclongchau.com.vn/unsafe/375x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_05612_2244c1f439.jpg"
-                      className="w-auto rounded-xl"
-                      alt=""
-                    />
-                  </div>
+                  {product.images?.map((image, index) => (
+                    <div
+                      className="border p-3 rounded-xl size-[110px]"
+                      key={index}
+                    >
+                      <img
+                        src={image.url}
+                        className="size-full object-cover rounded-xl"
+                        alt={product.name}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -70,8 +69,7 @@ export const ProductDetail = () => {
                   </a>
                 </span>
                 <h1 className="text-2xl font-semibold mt-3 mb-3">
-                  Sữa chống nắng La Roche-Posay Anthelios Uvmune 400 dành cho da
-                  dầu mụn (50ml)
+                  {product.name}
                 </h1>
                 <div className="flex justify-start items-center gap-2 mb-3">
                   <p>5</p>
@@ -82,7 +80,10 @@ export const ProductDetail = () => {
                   <p className="text-green-600">40 bình luận</p>
                 </div>
                 <div className="flex justify-start items-end text-green-600 mb-3">
-                  <span className="text-4xl font-semibold">450.000 </span>
+                  <span className="text-4xl font-semibold">
+                    {" "}
+                    {formatCurrency(product.price)}
+                  </span>
                   <span className="text-2xl">/ Hộp</span>
                 </div>
                 <div>
@@ -149,15 +150,7 @@ export const ProductDetail = () => {
                           Mô tả ngắn
                         </td>
                         <td className="w-full md:w-7/12">
-                          Sữa chống nắng La Roche-Posay Dermatologique Anthelios
-                          UVMune400 Oil Control Fluid 50ml là sản phẩm sữa chống
-                          nắng lỏng nhẹ có chỉ số chống nắng SPF50+, PA++++ và
-                          màng lọc Mexory 400 giúp bảo vệ da trước tác hại của
-                          tia UVB, UVA (bước sóng dài 380 - 400 nm), nguyên nhân
-                          chính gây thâm nám. Sản phẩm giúp giảm bóng nhờn và
-                          tạo hiệu ứng lì 12 giờ với kết cấu sản phẩm khô
-                          thoáng, không gây bết dính, không để lại vệt trắng.
-                          Không chứa hương liệu, không paraben.
+                          {product.short_description}
                         </td>
                       </tr>
                       <tr className="w-full flex flex-wrap mb-4 text-lg">
@@ -247,32 +240,12 @@ export const ProductDetail = () => {
               </div>
               <div id="describe" className="mb-3">
                 <p className="text-xl font-semibold mb-2">Mô tả sản phẩm</p>
-                <p className="text-lg">
-                  Anthelios UVMUNE 400 là sản phẩm chống nắng mới nhất của
-                  thương hiệu La Roche Posay với màng lọc độc quyền Mexoryl 400
-                  giúp bảo vệ da trước tác hại của tia UVB, UVA và công nghệ
-                  Netlock giúp bảo vệ da khỏi “thủ phạm tiềm ẩn” hình thành các
-                  gốc thâm nám nằm sâu dưới da. Chất kem lỏng nhẹ, thích hợp cho
-                  làn da dầu mụn. Tia UV trong ánh nắng mặt trời đủ mạnh để tác
-                  động đến làn da, khiến da bị sần sùi, đen sạm,... dù đã được
-                  che chắn kỹ lưỡng. Do đó, việc sử dụng kem chống nắng sẽ giúp
-                  bạn ngăn được sự ảnh hưởng của các tia UV, UVA. Sử dụng kem
-                  chống nắng còn giúp ngăn quá trình lão hóa da đến sớm và làm
-                  cho da luôn trẻ trung, tràn đầy sức sống. Thương hiệu mỹ phẩm
-                  La Roche-Posay đến từ Pháp mang cho làn da dầu mụn một giải
-                  pháp tối ưu đó là sản phẩm chống nắng La Roche-Posay Anthelios
-                  UVMune 400 có khả năng bảo vệ da toàn diện và tăng cường độ ẩm
-                  cần thiết cho da. Với kết cấu dạng sữa lỏng nhẹ, La
-                  Roche-Posay Anthelios UVMune 400 giảm bóng nhờ, cho cảm giác
-                  thoải mái khi sử dụng. Với công nghệ màng lọc chống nắng độc
-                  quyền, La Roche-Posay Anthelios UVMune 400 giúp ngăn ngừa nám
-                  sạm, lão hóa hiệu quả.
-                </p>
+                <p className="text-lg">{product.description}</p>
                 <div className="flex justify-center items-center py-5">
                   <img
-                    src="https://cdn.nhathuoclongchau.com.vn/unsafe/375x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_05612_2244c1f439.jpg"
+                    src={product.images?.[0]?.url}
                     className="w-2/3"
-                    alt=""
+                    alt={product.name}
                   />
                 </div>
               </div>

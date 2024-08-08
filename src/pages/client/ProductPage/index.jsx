@@ -1,6 +1,21 @@
+import { useEffect, useState } from "react";
 import ProductCard from "../../../components/ProductCard";
+import { getProducts } from "../../../services/product";
 
 const ProductPage = () => {
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    const res = await getProducts(1, 12);
+
+    if (res) {
+      setProducts(res.data.data.products);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
     <>
       <div className="bg-neutral-100">
@@ -189,9 +204,10 @@ const ProductPage = () => {
             </button>
           </div>
           <div className="grid grid-col-2 md:grid-cols-4 gap-3">
-            {Array.from({ length: 12 }).map((_, index) => (
-              <ProductCard key={index} />
-            ))}
+            {products.length > 0 &&
+              products.map((product, index) => (
+                <ProductCard product={product} key={index} />
+              ))}
           </div>
         </div>
       </div>

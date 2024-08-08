@@ -1,30 +1,38 @@
-const ProductCard = () => {
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { formatCurrency } from "../../utils/common";
+
+const ProductCard = ({ product }) => {
   return (
-    <a className="product-card" href="/chi-tiet-san-pham">
-      <div className="h-full overflow-hidden rounded-lg border bg-white pb-[1px] shadow-sm">
-        <div className="product-card-image">
-          <div>
-            <img
-              className="max-h-[100%] max-w-[100%] object-contain"
-              src="https://prod-cdn.pharmacity.io/e-com/images/ecommerce/500x500/P14296.png"
-              alt="Nước Súc Miệng THÁI DƯƠNG Valentine (chai 500ml)"
-              loading="lazy"
-              width="500"
-              height="500"
-            />
-            <div className="absolute bottom-0 left-0 flex h-[26px] w-full"></div>
-          </div>
+    <Link className="" to={`/san-pham/${product._id}`}>
+      <div className="h-full overflow-hidden rounded-lg border bg-white pb-[1px] shadow-sm flex flex-col">
+        <div className="size-full max-h-[185px]">
+          <img
+            className="max-h-[100%] max-w-[100%] object-contain"
+            src={product.images[0].url}
+            alt={product.name}
+            loading="lazy"
+            width="500"
+            height="500"
+          />
+          <div className="absolute bottom-0 left-0 flex h-[26px] w-full"></div>
         </div>
-        <div className="p-2 pb-1 font-medium">
-          <div data-state="closed" className="">
+        <div className="p-2 pb-1 font-medium flex-1 flex flex-col justify-between">
+          <div className="">
             <h3 className="line-clamp-2 h-10 text-sm font-semibold">
-              Nước Súc Miệng THÁI DƯƠNG Valentine (chai 500ml)
+              {product.name}
             </h3>
           </div>
           <div className="my-1 items-center whitespace-nowrap">
-            <del className="block h-5 text-sm font-semibold text-neutral-600"></del>
+            {product.discount > 0 && (
+              <del className="block h-5 text-sm font-semibold text-neutral-600">
+                {formatCurrency(
+                  Number(product.price) * Number(1 - product.discount)
+                )}
+              </del>
+            )}
             <span className="mt-[2px] block h-6 text-base font-bold text-green-600">
-              41.000&nbsp;₫/Chai
+              {formatCurrency(product.price)}
             </span>
             <div className="mb-2 flex items-center py-1 text-sm">
               <span className="p-icon inline-flex h-4 max-h-full w-4 max-w-full items-center align-[-0.125em] text-neutral-700">
@@ -52,8 +60,12 @@ const ProductCard = () => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
+};
+
+ProductCard.propTypes = {
+  product: PropTypes.object,
 };
 
 export default ProductCard;

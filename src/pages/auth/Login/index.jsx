@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authLogin } from "../../../store/reducers/authSlice";
 import { useEffect } from "react";
 
@@ -140,12 +140,12 @@ const LoginPage = () => {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Chưa có tài khoản?
-            <a
-              href="/tai-khoan/dang-ky"
+            <Link
+              to={"/tai-khoan/dang-ky"}
               className="inline-block ml-2 font-semibold leading-6 text-green-600 hover:text-green-500"
             >
               Tạo tài khoản mới
-            </a>
+            </Link>
           </p>
         </div>
       </div>

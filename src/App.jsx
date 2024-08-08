@@ -35,7 +35,7 @@ const routes = createBrowserRouter([
       { path: "gio-hang", element: <CartPage /> },
       { path: "thanh-toan", element: <PayPage /> },
       { path: "san-pham", element: <ProductPage /> },
-      { path: "chi-tiet-san-pham", element: <ProductDetail /> },
+      { path: "san-pham/:id", element: <ProductDetail /> },
     ],
   },
   {

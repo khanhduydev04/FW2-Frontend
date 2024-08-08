@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import BrandCard from "../../components/BrandCard";
 import { SectionHeading } from "../../components/Heading";
 import ProductSlider from "../../components/ProductSlider";
 import Slider from "../../components/Slider";
+import { getProducts } from "../../services/product";
 
 const brands = [
   {
@@ -35,6 +37,20 @@ const brands = [
 ];
 
 const HomePage = () => {
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async () => {
+    const res = await getProducts(1, 8);
+
+    if (res) {
+      setProducts(res.data.data.products);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <div className="">
       <div className="mt-3 md:container md:mb-4 md:mt-5">
@@ -54,7 +70,6 @@ const HomePage = () => {
                   loading="lazy"
                   width="500"
                   height="500"
-                  // quality="100"
                 />
               </div>
             </a>
@@ -83,7 +98,7 @@ const HomePage = () => {
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
-              <ProductSlider></ProductSlider>
+              <ProductSlider products={products}></ProductSlider>
             </div>
           </div>
         </div>
@@ -97,7 +112,7 @@ const HomePage = () => {
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
-              <ProductSlider></ProductSlider>
+              <ProductSlider products={products}></ProductSlider>
             </div>
           </div>
         </div>
@@ -111,7 +126,7 @@ const HomePage = () => {
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
-              <ProductSlider></ProductSlider>
+              <ProductSlider products={products}></ProductSlider>
             </div>
           </div>
         </div>
@@ -125,7 +140,7 @@ const HomePage = () => {
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
-              <ProductSlider></ProductSlider>
+              <ProductSlider products={products}></ProductSlider>
             </div>
           </div>
         </div>
