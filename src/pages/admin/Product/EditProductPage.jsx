@@ -1,16 +1,16 @@
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {getProductById, updateProduct} from "../../../services/product";
-import {useForm} from "react-hook-form";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getProductById, updateProduct } from "../../../services/product";
+import { useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const EditProductPage = () => {
     const {
         register,
         handleSubmit,
         setValue,
-        formState: {errors},
+        formState: { errors },
     } = useForm();
     const params = useParams();
     const [product, setProduct] = useState({});
@@ -48,10 +48,10 @@ const EditProductPage = () => {
             }
         }
         updateProduct(params.id, formData).then((result) => {
-          setProduct(result.data.data)
+            setProduct(result.data.data)
         }).catch((err) => {
-          console.error(err);
-          
+            console.error(err);
+
         });
     };
     return (
@@ -77,9 +77,10 @@ const EditProductPage = () => {
                                             name="name"
                                             id="name"
                                             autoComplete="given-name"
-                                            {...register("name")}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register("name", { required: "Tên sản phẩm không được để trống" })}
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
                                         />
+                                        {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3">
@@ -95,9 +96,10 @@ const EditProductPage = () => {
                                             name="price"
                                             id="price"
                                             autoComplete="given-name"
-                                            {...register("price")}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register("price", { required: "Giá bán không được để trống" })}
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
                                         />
+                                        {errors.price && <span className="text-red-500 text-sm">{errors.price.message}</span>}
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3">
@@ -117,7 +119,7 @@ const EditProductPage = () => {
                                             step={0.01}
                                             autoComplete="given-name"
                                             {...register("discount")}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
                                         />
                                     </div>
                                 </div>
@@ -131,12 +133,13 @@ const EditProductPage = () => {
                                     <div className="mt-2">
                                         <input
                                             type="number"
-                                            name="tquantity"
+                                            name="quantity"
                                             id="quantity"
                                             autoComplete="given-name"
-                                            {...register("quantity")}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register("quantity", { required: "Số lượng không được để trống" })}
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
                                         />
+                                        {errors.quantity && <span className="text-red-500 text-sm">{errors.quantity.message}</span>}
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3">
@@ -150,9 +153,10 @@ const EditProductPage = () => {
                                         <textarea
                                             name="description"
                                             id="description"
-                                            {...register("description")}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register("description", { required: "Mô tả không được để trống" })}
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
                                         ></textarea>
+                                        {errors.description && <span className="text-red-500 text-sm">{errors.description.message}</span>}
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3">
@@ -166,9 +170,10 @@ const EditProductPage = () => {
                                         <textarea
                                             name="short_description"
                                             id="short_description"
-                                            {...register("short_description")}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register("short_description", { required: "Mô tả ngắn không được để trống" })}
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
                                         ></textarea>
+                                        {errors.short_description && <span className="text-red-500 text-sm">{errors.short_description.message}</span>}
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3">
@@ -185,8 +190,8 @@ const EditProductPage = () => {
                                             id="images"
                                             multiple
                                             autoComplete="family-name"
-                                            {...register("images")}
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register("images", { required: "Hình ảnh không được để trống" })}
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
                                         />
                                         <div className="flex gap-2 mt-3">
                                             {product.images &&
@@ -208,6 +213,7 @@ const EditProductPage = () => {
                                                     );
                                                 })}
                                         </div>
+                                        {errors.images && <span className="text-red-500 text-sm">{errors.images.message}</span>}
                                     </div>
                                 </div>
                             </div>

@@ -4,6 +4,9 @@ import { getTokens } from "../../utils/auth";
 import { useDispatch } from "react-redux";
 import { authLogOut } from "../../store/reducers/authSlice";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,6 +19,13 @@ const Header = () => {
     dispatch(authLogOut());
     navigate("/");
   };
+
+  const [isPopupVisible, setPopupVisible] = useState(false);
+
+  const togglePopup = () => {
+    setPopupVisible(!isPopupVisible);
+  };
+
 
   return (
     <header className="bg-green-600">
@@ -52,16 +62,27 @@ const Header = () => {
           <div className="flex h-full items-center justify-between">
             <div className="hidden md:flex items-center">
               {username ? (
-                <div className="flex items-center">
-                  <span className="text-white mr-2">Xin chào {username}</span>
-                  <button
-                    className="text-white"
-                    onClick={() => {
-                      handleLogout();
-                    }}
+                <div className="relative flex items-center">
+                  <span
+                    className="flex justify-center items-center gap-1 text-white mr-2 text-xl cursor-pointer"
+                    onClick={togglePopup}
                   >
-                    Đăng xuất
-                  </button>
+                    <FontAwesomeIcon icon={faUser} />
+                    <p className="text-lg font-medium">{username}</p>
+                  </span>
+                  {isPopupVisible && (
+                    <div className="absolute top-full mt-2 right-0 bg-white border border-gray-300 rounded-lg shadow-lg">
+                      <button
+                        className="block px-4 py-2 text-left text-black"
+                        onClick={() => {
+                          handleLogout();
+                          setPopupVisible(false);
+                        }}
+                      >
+                        Đăng xuất
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <a

@@ -58,14 +58,14 @@ const AdminProductPage = () => {
                                 </p>
                             </div>
                             <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                <a href="/admin/product/add">
+                                <Link  to={"/admin/products/add"}>
                                     <button
                                         type="button"
                                         className="block rounded-md bg-green-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-500 transition-colors"
                                     >
                                         Thêm sản phẩm
                                     </button>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="mt-4 flow-root">
@@ -122,7 +122,7 @@ const AdminProductPage = () => {
                                                     </td>
                                                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 select-none">
                                                         <Link
-                                                            to={"/admin/product/edit/" + products?._id}
+                                                            to={"/admin/products/edit/" + products?._id}
                                                             className="text-indigo-600 hover:text-indigo-900"
                                                         >
                                                             Sửa

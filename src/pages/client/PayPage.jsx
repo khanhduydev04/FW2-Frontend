@@ -1,14 +1,25 @@
+import { useForm } from "react-hook-form";
 import { faChevronLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 const PayPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="bg-gray-100">
       <div className="container py-4">
         <div className="flex justify-start items-center gap-3 text-green-600">
-          <Link>
-            <FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>
+          <Link to="/cart">
+            <FontAwesomeIcon icon={faChevronLeft} />
           </Link>
           <p>Quay lại giỏ hàng</p>
         </div>
@@ -19,9 +30,9 @@ const PayPage = () => {
               <img
                 src="https://cdn.nhathuoclongchau.com.vn/unsafe/375x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09530_0dfec4805c.jpg"
                 className="w-14 h-14 p-1 rounded-xl border-[1px]"
-                alt=""
+                alt="Sáp dưỡng ẩm Vaseline Rosy Lotus Fobelife"
               />
-              <p className="">
+              <p>
                 Sáp dưỡng ẩm Vaseline Rosy Lotus Fobelife làm mềm da, làm dịu da
                 khi bị khô rát, nứt nẻ, dưỡng môi (7g)
               </p>
@@ -35,86 +46,101 @@ const PayPage = () => {
                 <FontAwesomeIcon
                   className="text-xl text-green-600"
                   icon={faUser}
-                ></FontAwesomeIcon>
+                />
                 <p className="font-medium">Thông tin người đặt</p>
               </div>
-              <form action="">
+              <form>
                 <div className="flex justify-center gap-4 mb-3">
                   <div className="w-1/2">
                     <input
                       type="text"
                       id="name"
-                      className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4"
+                      {...register("name", { required: "Họ và tên người đặt không được để trống" })}
+                      className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 ${errors.name ? "border-red-500" : ""
+                        }`}
                       placeholder="Họ và tên người đặt"
                     />
+                    {errors.name && <p className="text-red-500">{errors.name.message}</p>}
                   </div>
                   <div className="w-1/2">
                     <input
                       type="text"
                       id="numberphone"
-                      className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4"
+                      {...register("numberphone", { required: "Số điện thoại không được để trống" })}
+                      className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 ${errors.numberphone ? "border-red-500" : ""
+                        }`}
                       placeholder="Số điện thoại"
                     />
+                    {errors.numberphone && <p className="text-red-500">{errors.numberphone.message}</p>}
                   </div>
                 </div>
                 <div className="w-full">
                   <input
                     type="text"
                     id="email"
+                    {...register("email")}
                     className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4"
                     placeholder="Email (không bắt buộc)"
                   />
                 </div>
-              </form>
-
-              <div className="flex justify-start items-center gap-4 my-4">
-                <FontAwesomeIcon
-                  className="text-xl text-green-600"
-                  icon={faUser}
-                ></FontAwesomeIcon>
-                <p className="font-medium">Thông tin người nhận</p>
-              </div>
-              <form action="">
+                <div className="flex justify-start items-center gap-4 my-4">
+                  <FontAwesomeIcon
+                    className="text-xl text-green-600"
+                    icon={faUser}
+                  />
+                  <p className="font-medium">Thông tin người nhận</p>
+                </div>
                 <div className="flex justify-center gap-4 mb-3">
                   <div className="w-1/2">
                     <input
                       type="text"
-                      id="name"
-                      className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 !focus:border-gray-300"
+                      id="recipientName"
+                      {...register("recipientName", { required: "Họ và tên người nhận không được để trống" })}
+                      className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 ${errors.recipientName ? "border-red-500" : ""
+                        }`}
                       placeholder="Họ và tên người nhận"
                     />
+                    {errors.recipientName && <p className="text-red-500">{errors.recipientName.message}</p>}
                   </div>
                   <div className="w-1/2">
                     <input
                       type="text"
-                      id="phone"
-                      className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 !focus:border-gray-300"
+                      id="recipientPhone"
+                      {...register("recipientPhone", { required: "Số điện thoại không được để trống" })}
+                      className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 ${errors.recipientPhone ? "border-red-500" : ""
+                        }`}
                       placeholder="Số điện thoại"
                     />
+                    {errors.recipientPhone && <p className="text-red-500">{errors.recipientPhone.message}</p>}
                   </div>
                 </div>
                 <select
                   id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 !focus:border-gray-300 pe-4 mb-3"
+                  {...register("country", { required: "Vui lòng chọn Tỉnh/Thành phố" })}
+                  className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 pe-4 mb-3 ${errors.country ? "border-red-500" : ""
+                    }`}
                 >
-                  <option value="1">Chọn Tỉnh/Thành phố</option>
+                  <option value="">Chọn Tỉnh/Thành phố</option>
                   <option value="2">Canada</option>
                   <option value="3">Mexico</option>
                 </select>
+                {errors.country && <p className="text-red-500">{errors.country.message}</p>}
                 <div className="w-full">
                   <input
                     type="text"
-                    id="name"
-                    className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 mb-3"
+                    id="address"
+                    {...register("address", { required: "Nhập địa chỉ cụ thể không được để trống" })}
+                    className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 mb-3 ${errors.address ? "border-red-500" : ""
+                      }`}
                     placeholder="Nhập địa chỉ cụ thể"
                   />
+                  {errors.address && <p className="text-red-500">{errors.address.message}</p>}
                 </div>
                 <div className="w-full">
                   <input
                     type="text"
-                    id="name"
+                    id="note"
+                    {...register("note")}
                     className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 mb-3"
                     placeholder="Ghi chú"
                   />
@@ -130,7 +156,7 @@ const PayPage = () => {
                     <div className="flex items-center">
                       <span className="text-gray-700">Tổng tiền</span>
                     </div>
-                    <div className="font-medium ">35.000đ</div>
+                    <div className="font-medium">35.000đ</div>
                   </div>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center">
@@ -150,7 +176,7 @@ const PayPage = () => {
                   <p className="text-lg">Thành tiền</p>
                   <p className="text-green-600 text-xl">35.000 đ</p>
                 </div>
-                <button className="w-full h-12 bg-green-600 rounded-full text-white font-medium">
+                <button className="w-full h-12 bg-green-600 rounded-full text-white font-medium" onClick={handleSubmit(onSubmit)}>
                   Hoàn thành
                 </button>
               </div>
