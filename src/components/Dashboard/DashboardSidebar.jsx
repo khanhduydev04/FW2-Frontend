@@ -3,7 +3,9 @@ import {
   IconCampaign,
   IconDarkmode,
   IconDashboard,
+  IconFolder,
   IconPayment,
+  IconProfile,
   IconWithdraw,
 } from "../Icons";
 const sidebarLinks = [
@@ -29,8 +31,8 @@ const sidebarLinks = [
   },
   {
     icon: <IconDarkmode></IconDarkmode>,
-    title: "Light/Dark",
-    url: "/admin",
+    title: "Đơn hàng",
+    url: "/admin/quan-ly-don-hang",
     onClick: () => {},
   },
 ];
