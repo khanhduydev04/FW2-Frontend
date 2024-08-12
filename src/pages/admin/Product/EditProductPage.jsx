@@ -6,8 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { getCategories } from "../../../services/category";
 import { toast } from "react-toastify";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const EditProductPage = () => {
+  const axiosInstanceWithAuth = useAxiosPrivate();
   const {
     register,
     handleSubmit,
@@ -52,7 +54,7 @@ const EditProductPage = () => {
         formData.append("images", value.images[i]);
       }
     }
-    updateProduct(params.id, formData)
+    updateProduct(axiosInstanceWithAuth, params.id, formData)
       .then((result) => {
         toast.success("Cập nhật sản phẩm thành công");
         setProduct(result.data.data);

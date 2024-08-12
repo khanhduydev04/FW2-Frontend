@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { getCategories, deleteCategory } from "../../../services/category";
 import { toast } from "react-toastify";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const CategoryPage = () => {
+  const axiosInstanceWithAuth = useAxiosPrivate();
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async () => {
     try {
       const res = await getCategories();
       if (res) {
-        setCategories(res.data.data.categories);
+        setCategories(res.data);
       }
     } catch (error) {
       console.log(error);
@@ -18,7 +20,7 @@ const CategoryPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await deleteCategory(id);
+      const res = await deleteCategory(axiosInstanceWithAuth, id);
       if (res) {
         toast.success("Xóa danh mục thành công");
         fetchCategories();
@@ -88,40 +90,41 @@ const CategoryPage = () => {
                       </tr>
                     </thead>
                     <tbody className="bg-white">
-                      {categories.map((category, index) => (
-                        <tr
-                          className="odd:bg-white even:bg-slate-50"
-                          key={index}
-                        >
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                            {index + 1}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                            {category.name}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                            <img
-                              src={category.image}
-                              alt=""
-                              className="size-20 rounded-lg"
-                            />
-                          </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 select-none">
-                            <a
-                              href={`/admin/categories/edit/${category._id}`}
-                              className="text-indigo-600 hover:text-indigo-900"
-                            >
-                              Sửa
-                            </a>
-                            <span
-                              className="text-red-600 hover:text-red-800 ml-4 cursor-pointer btn-delete"
-                              onClick={() => handleDelete(category._id)}
-                            >
-                              Xóa
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
+                      {categories.length > 0 &&
+                        categories.map((category, index) => (
+                          <tr
+                            className="odd:bg-white even:bg-slate-50"
+                            key={index}
+                          >
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                              {index + 1}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                              {category.name}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                              <img
+                                src={category.image}
+                                alt=""
+                                className="size-20 rounded-lg"
+                              />
+                            </td>
+                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 select-none">
+                              <a
+                                href={`/admin/categories/edit/${category._id}`}
+                                className="text-indigo-600 hover:text-indigo-900"
+                              >
+                                Sửa
+                              </a>
+                              <span
+                                className="text-red-600 hover:text-red-800 ml-4 cursor-pointer btn-delete"
+                                onClick={() => handleDelete(category._id)}
+                              >
+                                Xóa
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

@@ -38,12 +38,14 @@ const brands = [
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchProducts = async () => {
     const res = await getProducts(1, 8);
 
     if (res) {
       setProducts(res.data.data.products);
+      setIsLoading(false);
     }
   };
 
@@ -112,7 +114,10 @@ const HomePage = () => {
           ></SectionHeading>
           <div className="md:-ml-1">
             <div className="relative flex h-full w-full items-center">
-              <ProductSlider products={products}></ProductSlider>
+              <ProductSlider
+                products={products}
+                isLoading={isLoading}
+              ></ProductSlider>
             </div>
           </div>
         </div>

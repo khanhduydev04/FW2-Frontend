@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { getCategories } from "../../../services/category";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const AddProductPage = () => {
+  const axiosInstanceWithAuth = useAxiosPrivate();
   const {
     register,
     handleSubmit,
@@ -35,7 +37,7 @@ const AddProductPage = () => {
       formData.append("images", value.images[i]);
     }
     try {
-      const response = await addProduct(formData);
+      const response = await addProduct(axiosInstanceWithAuth, formData);
       if (response) {
         toast.success("Thêm sản phẩm thành công");
         navigate("/admin/products");

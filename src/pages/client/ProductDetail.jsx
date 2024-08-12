@@ -12,11 +12,11 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export const ProductDetail = () => {
   const axiosInstanceWithAuth = useAxiosPrivate();
-  
-  const [content, setContent] = useState('');
+
+  const [content, setContent] = useState("");
   const handleContentChange = (e) => {
     setContent(e.target.value);
-  }
+  };
   const [activeId, setActiveId] = useState("describe");
   const [isShow, setIsShow] = useState(false);
   const [product, setProduct] = useState({});
@@ -117,8 +117,8 @@ export const ProductDetail = () => {
                     {" "}
                     {product.discount > 0
                       ? formatCurrency(
-                        Number(product.price) * (1 - Number(product.discount))
-                      )
+                          Number(product.price) * (1 - Number(product.discount))
+                        )
                       : formatCurrency(product.price)}
                   </span>
                   <span className="text-2xl">/ Hộp</span>
@@ -226,7 +226,6 @@ export const ProductDetail = () => {
                               className="text-center w-1/3"
                               ref={quantityRef}
                               value={localQuantity}
-                              defaultValue={1}
                               onChange={handleChange}
                               onBlur={handleBlur}
                             />
@@ -261,22 +260,25 @@ export const ProductDetail = () => {
             <div className="hidden md:block md:col-span-3 p-3">
               <ul className="divide-y" id="product_describe">
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "describe" ? "bg-gray-300" : ""
-                    }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
+                    activeId === "describe" ? "bg-gray-300" : ""
+                  }`}
                   onClick={() => handleNavClick("describe")}
                 >
                   Mô tả
                 </li>
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "use" ? "bg-gray-300" : ""
-                    }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
+                    activeId === "use" ? "bg-gray-300" : ""
+                  }`}
                   onClick={() => handleNavClick("use")}
                 >
                   Công dụng
                 </li>
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "preserve" ? "bg-gray-300" : ""
-                    }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
+                    activeId === "preserve" ? "bg-gray-300" : ""
+                  }`}
                   onClick={() => handleNavClick("preserve")}
                 >
                   Bảo quản
@@ -329,13 +331,13 @@ export const ProductDetail = () => {
             <div className="flex justify-between items-center py-3">
               <p className="text-lg font-medium text-gray-500 flex justify-start items-center gap-4">
                 Trung bình{" "}
-                <p className="text-2xl text-black">
+                <span className="text-2xl text-black">
                   5{" "}
                   <FontAwesomeIcon
                     className="text-yellow-500 text-lg"
                     icon={faStar}
                   />
-                </p>
+                </span>
               </p>
               `
               <button

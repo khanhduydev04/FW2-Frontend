@@ -5,10 +5,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { updateCategory, getCategoryById } from "../../../services/category";
 import { useEffect } from "react";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const EditCatagoryPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const axiosInstanceWithAuth = useAxiosPrivate();
   const {
     handleSubmit,
     register,
@@ -37,7 +39,7 @@ const EditCatagoryPage = () => {
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("image", data.image[0]);
-      const res = await updateCategory(id, formData);
+      const res = await updateCategory(axiosInstanceWithAuth, id, formData);
       if (res.data) {
         toast.success("Cập nhật danh mục thành công");
         navigate("/admin/categories");
@@ -50,6 +52,7 @@ const EditCatagoryPage = () => {
 
   useEffect(() => {
     fetchCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -79,7 +82,9 @@ const EditCatagoryPage = () => {
                       id="name"
                       autoComplete="given-name"
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
-                      {...register("name", { required: "Tên danh mục không được để trống" })}
+                      {...register("name", {
+                        required: "Tên danh mục không được để trống",
+                      })}
                     />
                     {errors.name && (
                       <p className="mt-2 text-sm text-red-600">
@@ -106,7 +111,6 @@ const EditCatagoryPage = () => {
                     >
                       Tải ảnh lên
                     </label>
-                    
                   </div>
                 </div>
               </div>

@@ -2,8 +2,11 @@ import { useState } from "react";
 import { deleteProduct, getProducts } from "../../../services/product";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const AdminProductPage = () => {
+  const axiosInstanceWithAuth = useAxiosPrivate();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -36,12 +39,16 @@ const AdminProductPage = () => {
   };
   const handleDelete = (id) => {
     if (window.confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
-      deleteProduct(id)
+      deleteProduct(axiosInstanceWithAuth, id)
         .then((result) => {
-          console.log(result);
+          if (result) {
+            toast.success("Xóa sản phẩm thành công");
+            fetchProducts();
+          }
         })
         .catch((err) => {
           console.log(err);
+          toast.error("Xóa sản phẩm thất bại");
         });
     }
   };

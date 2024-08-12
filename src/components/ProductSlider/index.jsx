@@ -8,8 +8,9 @@ import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import ProductCard from "../ProductCard";
 import { useRef } from "react";
+import { ProductSkeleton } from "../Loading";
 
-const ProductSlider = ({ products }) => {
+const ProductSlider = ({ products, isLoading }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -50,14 +51,23 @@ const ProductSlider = ({ products }) => {
         }}
         className="h-full"
       >
-        {products.map((product, index) => (
-          <SwiperSlide
-            key={index}
-            className="!h-auto !w-[178px] pb-[1px] md:!w-[192px]"
-          >
-            <ProductCard product={product}></ProductCard>
-          </SwiperSlide>
-        ))}
+        {isLoading
+          ? Array.from({ length: 10 }).map((_, index) => (
+              <SwiperSlide
+                key={index}
+                className="!h-auto !w-[178px] pb-[1px] md:!w-[192px]"
+              >
+                <ProductSkeleton />
+              </SwiperSlide>
+            ))
+          : products.map((product, index) => (
+              <SwiperSlide
+                key={index}
+                className="!h-auto !w-[178px] pb-[1px] md:!w-[192px]"
+              >
+                <ProductCard product={product} />
+              </SwiperSlide>
+            ))}
       </Swiper>
       <div
         ref={prevRef}
@@ -73,6 +83,7 @@ const ProductSlider = ({ products }) => {
 
 ProductSlider.propTypes = {
   products: PropTypes.array,
+  isLoading: PropTypes.bool,
 };
 
 export default ProductSlider;

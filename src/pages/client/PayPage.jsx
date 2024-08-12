@@ -8,6 +8,12 @@ import { getTokens } from "../../utils/auth";
 import { getCartByUser } from "../../services/cart";
 import { calculateTotals, formatCurrency } from "../../utils/common";
 import { jwtDecode } from "jwt-decode";
+import useSWR from "swr";
+import {
+  fetchDistricts,
+  fetchProvinces,
+  fetchWards,
+} from "../../services/loaction";
 
 const PayPage = () => {
   const axiosInstanceWithAuth = useAxiosPrivate();
@@ -30,6 +36,72 @@ const PayPage = () => {
     formState: { errors },
   } = useForm();
 
+  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [selectedProvinceName, setSelectedProvinceName] = useState("");
+  const [selectedDistrictName, setSelectedDistrictName] = useState("");
+  const [selectedWardName, setSelectedWardName] = useState("");
+
+  const {
+    data: provinces,
+    error: provincesError,
+    isLoading: isLoadingProvinces,
+  } = useSWR("https://open.oapi.vn/location/provinces?size=63", fetchProvinces);
+
+  const {
+    data: districts,
+    error: districtsError,
+    isLoading: isLoadingDistricts,
+  } = useSWR(
+    selectedProvince
+      ? `https://open.oapi.vn/location/districts?provinceId=${selectedProvince}`
+      : null,
+    () => fetchDistricts(selectedProvince)
+  );
+
+  const {
+    data: wards,
+    error: wardsError,
+    isLoading: isLoadingWards,
+  } = useSWR(
+    selectedDistrict
+      ? `https://open.oapi.vn/location/wards?districtId=${selectedDistrict}`
+      : null,
+    () => fetchWards(selectedDistrict)
+  );
+
+  const handleProvinceChange = (event) => {
+    const selectedProvinceId = event.target.value;
+    setSelectedProvince(selectedProvinceId);
+    if (provinces && provinces.data) {
+      const selectedProvince = provinces.data.find(
+        (province) => province.id === selectedProvinceId
+      );
+      setSelectedProvinceName(selectedProvince?.name || "");
+    }
+  };
+
+  const handleDistrictChange = (event) => {
+    const selectedDistrictId = event.target.value;
+    setSelectedDistrict(selectedDistrictId);
+    if (districts && districts.data) {
+      const selectedDistrict = districts.data.find(
+        (district) => district.id === selectedDistrictId
+      );
+      setSelectedDistrictName(selectedDistrict?.name || "");
+    }
+  };
+
+  const handleWardChange = (event) => {
+    const selectedWardId = event.target.value;
+    if (wards && wards.data) {
+      const selectedWard = wards.data.find(
+        (ward) => ward.id === selectedWardId
+      );
+      setSelectedWardName(selectedWard?.name || "");
+    }
+  };
+
   const fetchCart = async () => {
     if (accessToken && refreshToken) {
       const res = await getCartByUser(axiosInstanceWithAuth);
@@ -38,12 +110,16 @@ const PayPage = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log({
+      ...data,
+      province: selectedProvinceName,
+      district: selectedDistrictName,
+      ward: selectedWardName,
+    });
   };
 
   useEffect(() => {
     fetchCart();
-    console.log(user);
 
     reset({
       name: user?.fullname,
@@ -51,7 +127,6 @@ const PayPage = () => {
       email: "",
       recipientName: user?.fullname,
       recipientPhone: "",
-      country: "",
       address: "",
       note: "",
     });
@@ -228,22 +303,76 @@ const PayPage = () => {
                       )}
                     </div>
                   </div>
+                  <div className="flex justify-center gap-4 mb-3">
+                    <select
+                      id="provinceId"
+                      {...register("provinceId", {
+                        required: "Vui lòng chọn Tỉnh/Thành phố",
+                      })}
+                      onChange={handleProvinceChange}
+                      className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 focus:ring-green-600 focus:outline-none pe-4 mb-3 ${
+                        errors.provinceId
+                          ? "border-red-500 focus:ring-red-500"
+                          : ""
+                      }`}
+                    >
+                      <option value="">Chọn Tỉnh/Thành phố</option>
+                      {provinces &&
+                        provinces.data.length > 0 &&
+                        provinces?.data.map((province) => (
+                          <option key={province.id} value={province.id}>
+                            {province.name}
+                          </option>
+                        ))}
+                    </select>
+                    <select
+                      id="districtId"
+                      {...register("districtId", {
+                        required: "Vui lòng chọn Huyện/Quận",
+                      })}
+                      onChange={handleDistrictChange}
+                      disabled={!selectedProvince && districts?.data.length > 0}
+                      className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 focus:ring-green-600 focus:outline-none pe-4 mb-3 ${
+                        errors.districtId
+                          ? "border-red-500 focus:ring-red-500"
+                          : ""
+                      }${
+                        selectedProvince ? "" : "bg-gray-200 cursor-not-allowed"
+                      }`}
+                    >
+                      <option value="">Chọn Huyện/Quận</option>
+                      {districts &&
+                        districts?.data.length > 0 &&
+                        districts?.data?.map((district) => (
+                          <option key={district.id} value={district.id}>
+                            {district.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
                   <select
-                    id="country"
-                    {...register("country", {
-                      required: "Vui lòng chọn Tỉnh/Thành phố",
+                    id="wardId"
+                    {...register("wardId", {
+                      required: "Vui lòng chọn Xã/Phường",
                     })}
+                    disabled={!selectedDistrict && wards?.data.length > 0}
                     className={`w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 focus:ring-green-600 focus:outline-none pe-4 mb-3 ${
-                      errors.country ? "border-red-500 focus:ring-red-500" : ""
+                      errors.wardId ? "border-red-500 focus:ring-red-500" : ""
+                    }${
+                      selectedDistrict ? "" : "bg-gray-200 cursor-not-allowed"
                     }`}
+                    onChange={handleWardChange}
                   >
-                    <option value="">Chọn Tỉnh/Thành phố</option>
-                    <option value="2">Canada</option>
-                    <option value="3">Mexico</option>
+                    <option value="">Chọn Xã/Phường</option>
+                    {wards &&
+                      wards?.data.length > 0 &&
+                      wards?.data?.map((ward) => (
+                        <option key={ward.id} value={ward.id}>
+                          {ward.name}
+                        </option>
+                      ))}
                   </select>
-                  {errors.country && (
-                    <p className="text-red-500">{errors.country.message}</p>
-                  )}
                   <div className="w-full">
                     <input
                       type="text"

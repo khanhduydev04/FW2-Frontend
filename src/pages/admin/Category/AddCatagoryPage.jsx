@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { createCategory } from "../../../services/category";
 import { useNavigate } from "react-router-dom";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const AddCategoryPage = () => {
+  const axiosInstanceWithAuth = useAxiosPrivate();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -16,7 +18,7 @@ const AddCategoryPage = () => {
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("image", data.image[0]);
-      const res = await createCategory(formData);
+      const res = await createCategory(axiosInstanceWithAuth, formData);
       if (res.data) {
         toast.success("Thêm danh mục thành công");
         navigate("/admin/categories");
@@ -54,7 +56,9 @@ const AddCategoryPage = () => {
                       id="name"
                       autoComplete="given-name"
                       className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-                      {...register("name", { required: "Tên danh mục không được để trống" })}
+                      {...register("name", {
+                        required: "Tên danh mục không được để trống",
+                      })}
                     />
                     {errors.name && (
                       <p className="mt-2 text-sm text-red-600">
@@ -81,7 +85,6 @@ const AddCategoryPage = () => {
                     >
                       Tải ảnh lên
                     </label>
-                    
                   </div>
                 </div>
               </div>

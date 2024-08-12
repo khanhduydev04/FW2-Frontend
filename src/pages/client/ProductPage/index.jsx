@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../../../components/ProductCard";
 import { getProducts } from "../../../services/product";
+import { ProductSkeleton } from "../../../components/Loading";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchProducts = async () => {
     const res = await getProducts(1, 12);
 
     if (res) {
+      setIsLoading(false);
       setProducts(res.data.data.products);
     }
   };
@@ -204,10 +207,13 @@ const ProductPage = () => {
             </button>
           </div>
           <div className="grid grid-col-2 md:grid-cols-4 gap-3">
-            {products.length > 0 &&
-              products.map((product, index) => (
-                <ProductCard product={product} key={index} />
-              ))}
+            {isLoading
+              ? Array.from({ length: 12 }).map((_, index) => (
+                  <ProductSkeleton key={index} />
+                ))
+              : products.map((product, index) => (
+                  <ProductCard key={index} product={product} />
+                ))}
           </div>
         </div>
       </div>

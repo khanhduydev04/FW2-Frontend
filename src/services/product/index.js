@@ -1,6 +1,4 @@
-import axios from "axios";
-import axiosInstance, { axiosInstanceWithAuth } from "../../config/api";
-import { getTokens } from "../../utils/auth";
+import axiosInstance from "../../config/api";
 
 export const getProducts = async (page = 1, limit = 5) => {
   try {
@@ -13,12 +11,11 @@ export const getProducts = async (page = 1, limit = 5) => {
     return null;
   }
 };
-export const addProduct = async (data) => {
+export const addProduct = async (axiosInstanceWithAuth, data) => {
   try {
-    const res = await axios.post("http://localhost:8080/api/products", data, {
+    const res = await axiosInstanceWithAuth.post("/products", data, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${getTokens().accessToken}`,
       },
     });
     return res;
@@ -36,32 +33,22 @@ export const getProductById = async (id) => {
     return null;
   }
 };
-export const updateProduct = async (id, data) => {
+export const updateProduct = async (axiosInstanceWithAuth, id, data) => {
   try {
-    const res = await axios.patch(
-      `http://localhost:8080/api/products/${id}`,
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${getTokens().accessToken}`,
-        },
-      }
-    );
+    const res = await axiosInstanceWithAuth.patch(`/products/${id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return res;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (axiosInstanceWithAuth, id) => {
   try {
-    const res = await axios.delete(`http://localhost:8080/api/products/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getTokens().accessToken}`,
-      },
-    });
+    const res = await axiosInstanceWithAuth.delete(`/products/${id}`);
     return res;
   } catch (error) {
     console.error(error);

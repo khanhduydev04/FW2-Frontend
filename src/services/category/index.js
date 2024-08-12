@@ -1,10 +1,9 @@
 import axiosInstance from "../../config/api";
-import { axiosInstanceWithAuth, requestWithAuth } from "../../config/api";
 
 export const getCategories = async () => {
   try {
     const res = await axiosInstance.get("/categories");
-    return res;
+    return res.data;
   } catch (error) {
     console.error(error);
     return null;
@@ -21,10 +20,12 @@ export const getCategoryById = async (id) => {
   }
 };
 
-export const createCategory = async (data) => {
+export const createCategory = async (axiosInstanceWithAuth, data) => {
   try {
-    const res = await requestWithAuth("/categories", "POST", data, {
-      "Content-Type": "multipart/form-data",
+    const res = await axiosInstanceWithAuth.post("/categories", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     return res;
   } catch (error) {
@@ -33,10 +34,12 @@ export const createCategory = async (data) => {
   }
 };
 
-export const updateCategory = async (id, data) => {
+export const updateCategory = async (axiosInstanceWithAuth, id, data) => {
   try {
-    const res = await requestWithAuth("/categories/" + id, "PATCH", data, {
-      "Content-Type": "multipart/form-data",
+    const res = await axiosInstanceWithAuth.patch(`/categories/${id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     return res;
   } catch (error) {
@@ -45,7 +48,7 @@ export const updateCategory = async (id, data) => {
   }
 };
 
-export const deleteCategory = async (id) => {
+export const deleteCategory = async (axiosInstanceWithAuth, id) => {
   try {
     const res = await axiosInstanceWithAuth.delete(`/categories/${id}`);
     return res;
