@@ -12,6 +12,11 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export const ProductDetail = () => {
   const axiosInstanceWithAuth = useAxiosPrivate();
+  
+  const [content, setContent] = useState('');
+  const handleContentChange = (e) => {
+    setContent(e.target.value);
+  }
   const [activeId, setActiveId] = useState("describe");
   const [isShow, setIsShow] = useState(false);
   const [product, setProduct] = useState({});
@@ -112,8 +117,8 @@ export const ProductDetail = () => {
                     {" "}
                     {product.discount > 0
                       ? formatCurrency(
-                          Number(product.price) * (1 - Number(product.discount))
-                        )
+                        Number(product.price) * (1 - Number(product.discount))
+                      )
                       : formatCurrency(product.price)}
                   </span>
                   <span className="text-2xl">/ Hộp</span>
@@ -256,25 +261,22 @@ export const ProductDetail = () => {
             <div className="hidden md:block md:col-span-3 p-3">
               <ul className="divide-y" id="product_describe">
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
-                    activeId === "describe" ? "bg-gray-300" : ""
-                  }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "describe" ? "bg-gray-300" : ""
+                    }`}
                   onClick={() => handleNavClick("describe")}
                 >
                   Mô tả
                 </li>
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
-                    activeId === "use" ? "bg-gray-300" : ""
-                  }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "use" ? "bg-gray-300" : ""
+                    }`}
                   onClick={() => handleNavClick("use")}
                 >
                   Công dụng
                 </li>
                 <li
-                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${
-                    activeId === "preserve" ? "bg-gray-300" : ""
-                  }`}
+                  className={`py-3 text-center cursor-pointer rounded-lg text-lg font-medium ${activeId === "preserve" ? "bg-gray-300" : ""
+                    }`}
                   onClick={() => handleNavClick("preserve")}
                 >
                   Bảo quản
@@ -356,51 +358,7 @@ export const ProductDetail = () => {
       >
         <div className="">
           <form>
-            <div className="gap-x-4 md:flex">
-              <div className="basis-2/4">
-                <div data-lc-component="input" className="w-full">
-                  <div className="group relative z-0 flex-1 w-full">
-                    <input
-                      type="text"
-                      id=":rt:"
-                      className="outline-none box-border w-full pl-4 rounded-lg border border-solid  h-[56px] pr-4"
-                      placeholder="Nhập họ và tên"
-                      maxLength="60"
-                      name="name"
-                      value=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 basis-2/4 md:mt-0">
-                <div data-lc-component="input" className="w-full basis-2/4">
-                  <div className="relative z-0 flex-1 w-full">
-                    <input
-                      type="tel"
-                      id=":ru:"
-                      className="outline-none box-border w-full pl-4 rounded-lg border h-[56px] pr-4"
-                      placeholder="Nhập số điện thoại"
-                      maxLength="10"
-                      name="phone"
-                      value=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div data-lc-component="input" className="mt-4 w-full basis-2/4">
-              <div className="group relative z-0 flex-1 w-full">
-                <input
-                  type="email"
-                  id=":rv:"
-                  className="peer outline-none box-border w-full pl-4 rounded-lg border border-solid h-[56px] pr-4"
-                  placeholder="Nhập email"
-                  name="email"
-                  value=""
-                />
-              </div>
-            </div>
-            <div data-lc-component="textarea" className="mt-4">
+            <div data-lc-component="textarea">
               <div className="flex-1 w-full">
                 <div className="flex flex-col-reverse justify-end box-border rounded-lg border border-solid py-[11px] h-[120px] bg-field-default-active disabled:!bg-field-default-disable border-stroke-default focus-within:border-stroke-focus disabled:!border-field-default-disable">
                   <textarea
@@ -409,7 +367,8 @@ export const ProductDetail = () => {
                     className="outline-none w-full px-4 font-normal text-justify"
                     placeholder="Nhập nội dung trả lời (Vui lòng gõ tiếng Việt có dấu)..."
                     maxLength="150"
-                    name="content"
+                    name={content}
+                    onChange={handleContentChange}
                   ></textarea>
                 </div>
               </div>
