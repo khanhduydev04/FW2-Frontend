@@ -26,7 +26,6 @@ const Header = () => {
     setPopupVisible(!isPopupVisible);
   };
 
-
   return (
     <header className="bg-green-600">
       <div className="container mx-auto grid grid-cols-[40px_1fr_40px] grid-rows-[40px] content-center pt-1.5 pb-2 md:grid-cols-[200px_1fr_270px] md:grid-rows-[56px] md:pt-4 md:pb-[44px]">
@@ -71,9 +70,9 @@ const Header = () => {
                     <p className="text-lg font-medium">{username}</p>
                   </span>
                   {isPopupVisible && (
-                    <div className="absolute top-full mt-2 right-0 bg-white border border-gray-300 rounded-lg shadow-lg">
+                    <div className="absolute top-full mt-2 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
                       <button
-                        className="block px-4 py-2 text-left text-black"
+                        className="block w-[110px] px-4 py-2 text-left text-black"
                         onClick={() => {
                           handleLogout();
                           setPopupVisible(false);
@@ -107,9 +106,9 @@ const Header = () => {
               )}
             </div>
             <div className="cart-mini relative shrink-0 md:ml-auto css-62ialb">
-              <a
+              <Link
                 className="inline-flex items-center justify-center w-10 h-10 bg-white rounded-full md:w-[134px] md:h-[48px] md:rounded-[42px]"
-                href="/gio-hang"
+                to={"/gio-hang"}
               >
                 <div className="relative">
                   <span
@@ -133,7 +132,7 @@ const Header = () => {
                 <span className="hidden md:block font-medium  text-green-600 ml-2">
                   Giỏ hàng
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -40,8 +40,9 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (auth.user && auth.user.username) {
-      auth.user.role === "admin" ? navigate("/admin") : navigate("/");
-      console.log("auth:", auth);
+      auth.user.role === "admin"
+        ? navigate("/admin/categories")
+        : navigate("/");
     }
   }, [auth, navigate]);
 

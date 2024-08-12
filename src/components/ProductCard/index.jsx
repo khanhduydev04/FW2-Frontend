@@ -26,13 +26,13 @@ const ProductCard = ({ product }) => {
           <div className="my-1 items-center whitespace-nowrap">
             {product.discount > 0 && (
               <del className="block h-5 text-sm font-semibold text-neutral-600">
-                {formatCurrency(
-                  Number(product.price) * Number(1 - product.discount)
-                )}
+                {formatCurrency(product.price)}
               </del>
             )}
             <span className="mt-[2px] block h-6 text-base font-bold text-green-600">
-              {formatCurrency(product.price)}
+              {formatCurrency(
+                Number(product.price) * (1 - Number(product.discount))
+              )}
             </span>
             <div className="mb-2 flex items-center py-1 text-sm">
               <span className="p-icon inline-flex h-4 max-h-full w-4 max-w-full items-center align-[-0.125em] text-neutral-700">

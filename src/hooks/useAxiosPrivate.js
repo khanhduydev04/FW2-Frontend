@@ -1,21 +1,17 @@
 import { axiosInstanceWithAuth } from "../config/api";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
-import { useSelector } from "react-redux";
+import { getTokens } from "../utils/auth";
 
 export default function useAxiosPrivate() {
   const refresh = useRefreshToken();
-  const { auth } = useSelector((state) => state);
+  const { accessToken } = getTokens();
 
   useEffect(() => {
     const requestInterceptor = axiosInstanceWithAuth.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${auth.accessToken}`;
-        }
-        // Kiểm tra role admin trước khi gửi request
-        if (auth.user.role !== "admin") {
-          return Promise.reject({ message: "Unauthorized" });
+          config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
         return config;
       },
@@ -40,7 +36,7 @@ export default function useAxiosPrivate() {
       axiosInstanceWithAuth.interceptors.request.eject(requestInterceptor);
       axiosInstanceWithAuth.interceptors.response.eject(responseInterceptor);
     };
-  }, [auth.accessToken, auth.user.role, refresh]);
+  }, [accessToken, refresh]);
 
   return axiosInstanceWithAuth;
 }

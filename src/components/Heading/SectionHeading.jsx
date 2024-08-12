@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const SectionHeading = ({ title, url }) => {
   return (
@@ -10,13 +11,13 @@ const SectionHeading = ({ title, url }) => {
       </div>
       <div>
         {url && (
-          <a
+          <Link
             className="relative flex justify-center border-0 bg-transparent text-sm font-normal text-blue-500 outline-none md:hover:text-gray-700 md:text-base"
             type="button"
-            href={url}
+            to={url}
           >
             Xem thêm
-          </a>
+          </Link>
         )}
       </div>
     </div>

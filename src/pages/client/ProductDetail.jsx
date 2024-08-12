@@ -5,13 +5,25 @@ import Modal from "../../components/Modal";
 import CommentList from "../../components/Comment/CommentList";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../services/product";
-import { formatCurrency } from "../../utils/common";
+import { formatCurrency, useChangeQuantity } from "../../utils/common";
+import { addToCart } from "../../services/cart";
+import { toast } from "react-toastify";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export const ProductDetail = () => {
+  const axiosInstanceWithAuth = useAxiosPrivate();
   const [activeId, setActiveId] = useState("describe");
   const [isShow, setIsShow] = useState(false);
   const [product, setProduct] = useState({});
   const { id } = useParams();
+  const {
+    localQuantity,
+    handleIncrease,
+    handleDecrease,
+    handleBlur,
+    handleChange,
+    quantityRef,
+  } = useChangeQuantity(1, product.quantity);
 
   const handleNavClick = (id) => {
     setActiveId(id);
@@ -26,8 +38,24 @@ export const ProductDetail = () => {
     }
   };
 
+  const handleAddProduct = async () => {
+    const data = {
+      product_id: product._id,
+      quantity: localQuantity,
+    };
+    try {
+      const res = await addToCart(axiosInstanceWithAuth, data);
+      if (res.data) {
+        toast.success("Thêm vào giỏ hàng thành công");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -82,10 +110,19 @@ export const ProductDetail = () => {
                 <div className="flex justify-start items-end text-green-600 mb-3">
                   <span className="text-4xl font-semibold">
                     {" "}
-                    {formatCurrency(product.price)}
+                    {product.discount > 0
+                      ? formatCurrency(
+                          Number(product.price) * (1 - Number(product.discount))
+                        )
+                      : formatCurrency(product.price)}
                   </span>
                   <span className="text-2xl">/ Hộp</span>
                 </div>
+                {product.discount > 0 && (
+                  <div className="text-gray-500 md:text-2xl md:font-medium md:leading-9 font-normal line-through animate-in duration-500">
+                    {formatCurrency(product.price)}
+                  </div>
+                )}
                 <div>
                   <table className="table-auto w-full">
                     <tbody>
@@ -173,17 +210,25 @@ export const ProductDetail = () => {
                         </td>
                         <td className="w-full md:w-7/12">
                           <div className="w-full md:w-1/3 flex justify-center items-center border rounded-2xl">
-                            <span className="p-2 w-1/3 flex justify-center items-center border-r rounded-l-2xl text-gray-600 text-sm">
+                            <span
+                              className="p-2 w-1/3 flex justify-center items-center border-r rounded-l-2xl text-gray-600 text-sm cursor-pointer"
+                              onClick={handleDecrease}
+                            >
                               <FontAwesomeIcon icon={faMinus} />
                             </span>
                             <input
-                              type="number"
+                              type="text"
                               className="text-center w-1/3"
-                              min="1"
-                              max="999"
-                              value="1"
+                              ref={quantityRef}
+                              value={localQuantity}
+                              defaultValue={1}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             />
-                            <span className="p-2 w-1/3 flex justify-center items-center border-l rounded-r-2xl text-gray-600 text-sm">
+                            <span
+                              className="p-2 w-1/3 flex justify-center items-center border-l rounded-r-2xl text-gray-600 text-sm cursor-pointer"
+                              onClick={handleIncrease}
+                            >
                               <FontAwesomeIcon icon={faPlus} />
                             </span>
                           </div>
@@ -193,7 +238,10 @@ export const ProductDetail = () => {
                   </table>
                 </div>
                 <div className="flex justify-between items-center mt-4">
-                  <button className="bg-green-600 py-3 w-1/2 text-xl text-white p-3 rounded-full font-medium">
+                  <button
+                    className="bg-green-600 py-3 w-1/2 text-xl text-white p-3 rounded-full font-medium"
+                    onClick={handleAddProduct}
+                  >
                     Chọn mua
                   </button>
                   <button className="bg-green-100 py-3 w-1/2 text-xl text-green-600 p-3 rounded-full ml-3 font-medium">

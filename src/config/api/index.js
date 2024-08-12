@@ -1,9 +1,6 @@
 import axios from "axios";
-import { getTokens } from "../../utils/auth";
 
 const API_BASE_URL = "http://localhost:8080/api";
-
-const { accessToken } = getTokens();
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -16,16 +13,10 @@ const axiosInstanceWithAuth = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
   },
 });
 
-const requestWithAuthAndCustomHeaders = (
-  url = "",
-  method = "GET",
-  data = {},
-  headers = {}
-) => {
+const requestWithAuth = (url = "", method = "GET", data = {}, headers = {}) => {
   return axiosInstanceWithAuth({
     url,
     method,
@@ -38,4 +29,4 @@ const requestWithAuthAndCustomHeaders = (
 };
 
 export default axiosInstance;
-export { axiosInstanceWithAuth, requestWithAuthAndCustomHeaders };
+export { axiosInstanceWithAuth, requestWithAuth };
