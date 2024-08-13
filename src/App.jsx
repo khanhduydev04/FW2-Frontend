@@ -26,6 +26,7 @@ import RegisterPage from "./pages/auth/Resgister";
 import PayPage from "./pages/client/PayPage";
 import OderPage from "./pages/admin/Oder/OderPage";
 import ScrollToTop from "./components/Scroll";
+import PaymentResultPage from "./pages/client/PaymentResultPage";
 
 const routes = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const routes = createBrowserRouter([
       { path: "thanh-toan", element: <PayPage /> },
       { path: "san-pham", element: <ProductPage /> },
       { path: "san-pham/:id", element: <ProductDetail /> },
+      { path: "ket-qua-thanh-toan", element: <PaymentResultPage /> },
     ],
   },
   {

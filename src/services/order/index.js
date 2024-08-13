@@ -27,3 +27,13 @@ export const getOrderById = async (axiosInstanceWithAuth, id) => {
     return null;
   }
 };
+
+export const updatePaymentStatusOrder = async (axiosInstanceWithAuth, id) => {
+  try {
+    const res = await axiosInstanceWithAuth.patch(`users/orders/${id}`, {paymentStatus: 'paid'});
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

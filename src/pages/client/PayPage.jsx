@@ -139,9 +139,7 @@ const PayPage = () => {
     const res = await createOrder(axiosInstanceWithAuth, orderData);
     if (res) {
       console.log(res);
-
-      navigate(`${res.vnpUrl}`, { replace: true });
-      toast.success("Đặt hàng thành công");
+      window.location.href = res.vnpUrl
     } else {
       toast.error("Đặt hàng thất bại");
     }
