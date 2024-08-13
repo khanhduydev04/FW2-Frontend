@@ -55,3 +55,13 @@ export const deleteProduct = async (axiosInstanceWithAuth, id) => {
     return null;
   }
 };
+
+export const searchProduct = async (search) => {
+  try {
+    const res = await axiosInstance.get(`/products?search=${search}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

@@ -9,9 +9,14 @@ import { formatCurrency, useChangeQuantity } from "../../utils/common";
 import { addToCart } from "../../services/cart";
 import { toast } from "react-toastify";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { jwtDecode } from "jwt-decode";
+import { getTokens } from "../../utils/auth";
 
 export const ProductDetail = () => {
   const axiosInstanceWithAuth = useAxiosPrivate();
+  const { accessToken } = getTokens();
+
+  const user = accessToken ? jwtDecode(accessToken) : null;
 
   const [content, setContent] = useState("");
   const handleContentChange = (e) => {
@@ -48,6 +53,10 @@ export const ProductDetail = () => {
       product_id: product._id,
       quantity: localQuantity,
     };
+    if (!accessToken || !user) {
+      toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng");
+      return;
+    }
     try {
       const res = await addToCart(axiosInstanceWithAuth, data);
       if (res.data) {
