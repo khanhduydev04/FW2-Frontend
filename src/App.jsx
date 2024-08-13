@@ -25,6 +25,7 @@ import LoginPage from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/Resgister";
 import PayPage from "./pages/client/PayPage";
 import OderPage from "./pages/admin/Oder/OderPage";
+import ScrollToTop from "./components/Scroll";
 
 const routes = createBrowserRouter([
   {
@@ -120,7 +121,11 @@ const routes = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={routes} />;
+  return (
+    <RouterProvider router={routes}>
+      <ScrollToTop />
+    </RouterProvider>
+  );
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { faChevronLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import { getTokens } from "../../utils/auth";
@@ -9,11 +9,13 @@ import { getCartByUser } from "../../services/cart";
 import { calculateTotals, formatCurrency } from "../../utils/common";
 import { jwtDecode } from "jwt-decode";
 import useSWR from "swr";
+import { toast } from "react-toastify";
 import {
   fetchDistricts,
   fetchProvinces,
   fetchWards,
 } from "../../services/loaction";
+import { createOrder } from "../../services/order";
 
 const PayPage = () => {
   const axiosInstanceWithAuth = useAxiosPrivate();
@@ -25,6 +27,8 @@ const PayPage = () => {
     fullname: decode.fullname,
     username: decode.username,
   };
+
+  const navigate = useNavigate();
 
   const { totalAmount, totalDiscount, totalAfterDiscount } =
     calculateTotals(carts);
@@ -109,13 +113,38 @@ const PayPage = () => {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log({
-      ...data,
-      province: selectedProvinceName,
-      district: selectedDistrictName,
-      ward: selectedWardName,
-    });
+  const handleCreateOrder = async (data) => {
+    const orderData = {
+      orderer: {
+        id: user?.id,
+        fullname: user?.fullname,
+        phone: data?.numberphone,
+        email: data?.email,
+      },
+      recipient: {
+        fullname: data?.recipientName,
+        phone: data?.recipientPhone,
+        address: data?.address,
+        province: selectedProvinceName,
+        district: selectedDistrictName,
+        ward: selectedWardName,
+      },
+      note: data?.note.trim(),
+      items: carts.map((cart) => ({
+        productId: cart.product_id._id,
+        quantity: cart.quantity,
+      })),
+    };
+    console.log(orderData);
+    const res = await createOrder(axiosInstanceWithAuth, orderData);
+    if (res) {
+      console.log(res);
+
+      navigate(`${res.vnpUrl}`, { replace: true });
+      toast.success("Đặt hàng thành công");
+    } else {
+      toast.error("Đặt hàng thất bại");
+    }
   };
 
   useEffect(() => {
@@ -247,7 +276,7 @@ const PayPage = () => {
                   </div>
                   <div className="w-full">
                     <input
-                      type="text"
+                      type="email"
                       id="email"
                       {...register("email")}
                       className="w-full h-14 border-[1px] border-gray-300 rounded-md mt-1 ps-4 focus:ring-green-600 focus:outline-none"
@@ -456,7 +485,7 @@ const PayPage = () => {
                   </div>
                   <button
                     className="w-full h-12 bg-green-600 rounded-full text-white font-medium"
-                    onClick={handleSubmit(onSubmit)}
+                    onClick={handleSubmit(handleCreateOrder)}
                   >
                     Hoàn thành
                   </button>
