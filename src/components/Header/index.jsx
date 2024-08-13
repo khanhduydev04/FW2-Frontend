@@ -5,14 +5,39 @@ import { useDispatch } from "react-redux";
 import { authLogOut } from "../../store/reducers/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faDiagramNext, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faChevronRight, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import useDebounce from "../../hooks/useDebounce";
+import { searchProduct } from "../../services/product";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isShowSearch, setIsShowSearch] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [products, setProducts] = useState([]);
+  const [filter, setFilter] = useState("");
+  const filterDebounce = useDebounce(filter, 500);
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const filterProduct = async (filter) => {
+    setIsLoading(true);
+    const res = await searchProduct(filter);
+    if (res) {
+      setProducts(res.data.products);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (filterDebounce) {
+      filterProduct(filterDebounce);
+    }
+  }, [filterDebounce]);
+
   let username = "";
   if (getTokens().accessToken) {
     username = jwtDecode(getTokens().accessToken).username || "";
@@ -150,6 +175,7 @@ const Header = () => {
                   className="w-full text-ellipsis bg-transparent text-[#020b27] outline-none placeholder:text-text-tertiary placeholder-shown:text-ellipsis h-[28px] sm:h-[40px] text-body1 placeholder:text-sm peer"
                   defaultValue=""
                   onClick={() => setIsShowSearch(true)}
+                  onChange={handleFilterChange}
                 />
 
                 <button className="ml-2 items-center h-[20px] w-[20px] shrink-0 text-[#4a4f63] hidden">
@@ -225,51 +251,51 @@ const Header = () => {
         <NavLink to={"/san-pham"}>Góc sức khỏe</NavLink>
       </div>
 
-      <div className={isShowSearch ? "absolute w-full min-h-screen bg-black bg-opacity-25 z-30 flex justify-center" : "hidden"}
-        onClick={() => { setIsShowSearch(false) }}>
-        <div className="w-[47%] me-[4.5%] rounded-lg bg-white top-[-80px] absolute opacity-100 p-4 z-30">
+      <div
+        className={
+          isShowSearch
+            ? "absolute w-full min-h-screen bg-black bg-opacity-25 z-30 flex justify-center"
+            : "hidden"
+        }
+        onClick={() => {
+          setIsShowSearch(false);
+        }}
+      >
+        <div className="w-[47%] h-[500px] overflow-y-scroll me-[4.5%] rounded-lg bg-white top-[-80px] absolute opacity-100 p-4 z-30">
           {isLoading ? (
-            <div className="">
+            <div className="transition-all">
               <div className="mx-auto w-8 h-8 border-2 border-green-600 border-t-2 border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : (
-            <div className="">
+            <div className="transition-all">
               <p className="font-medium pb-4 border-b">Sản phẩm bạn cần tìm</p>
-              <div className="flex justify-start gap-2 border-b py-3">
-                <img src="https://cdn.nhathuoclongchau.com.vn/unsafe/160x160/https://cms-prod.s3-sgn09.fptcloud.com/00000639_alphagan_5ml_7166_6103_large_0446171916.jpg" className="w-24 h-24 rounded-sm" alt="" />
-                <div className="">
-                  <p className="font-medium">Thuốc nhỏ mắt Alphagan P Allergan điều trị tăng nhãn áp (5ml)</p>
-                  <p className="text-gray-500">Cần tư vấn từ dược sĩ</p>
-                </div>
-              </div>
-
-              <div className="flex justify-start gap-2 border-b py-3">
-                <img src="https://cdn.nhathuoclongchau.com.vn/unsafe/160x160/https://cms-prod.s3-sgn09.fptcloud.com/00000639_alphagan_5ml_7166_6103_large_0446171916.jpg" className="w-24 h-24 rounded-sm" alt="" />
-                <div className="">
-                  <p className="font-medium">Thuốc nhỏ mắt Alphagan P Allergan điều trị tăng nhãn áp (5ml)</p>
-                  <p className="text-gray-500">Cần tư vấn từ dược sĩ</p>
-                </div>
-              </div>
-
-              <div className="flex justify-start gap-2 border-b py-3">
-                <img src="https://cdn.nhathuoclongchau.com.vn/unsafe/160x160/https://cms-prod.s3-sgn09.fptcloud.com/00000639_alphagan_5ml_7166_6103_large_0446171916.jpg" className="w-24 h-24 rounded-sm" alt="" />
-                <div className="">
-                  <p className="font-medium">Thuốc nhỏ mắt Alphagan P Allergan điều trị tăng nhãn áp (5ml)</p>
-                  <p className="text-gray-500">Cần tư vấn từ dược sĩ</p>
-                </div>
-              </div>
+              {products.length > 0 &&
+                products.map((product, index) => (
+                  <Link
+                    className="flex justify-start gap-2 border-b py-3"
+                    key={index}
+                    to={`/san-pham/${product._id}`}
+                  >
+                    <img
+                      src={product.images[0].url}
+                      className="w-24 h-24 rounded-sm"
+                      alt={product.name}
+                    />
+                    <div className="">
+                      <p className="font-medium">{product.name}</p>
+                      <p className="text-gray-500">Cần tư vấn từ dược sĩ</p>
+                    </div>
+                  </Link>
+                ))}
 
               <div className="text-center mt-3">
-                <Link to={''} className="text-green-600 ">
+                <Link to={"/san-pham"} className="text-green-600 ">
                   Xem tất cả <FontAwesomeIcon icon={faChevronRight} />
                 </Link>
               </div>
             </div>
           )}
-
-
         </div>
-
       </div>
     </header>
   );
