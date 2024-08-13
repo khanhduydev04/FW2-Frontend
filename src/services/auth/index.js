@@ -1,5 +1,4 @@
 import axiosInstance from "../../config/api";
-import { axiosInstanceWithAuth } from "../../config/api";
 
 export const login = async ({ username, password }) => {
   try {
@@ -40,42 +39,42 @@ export const refreshToken = async (refreshToken) => {
   }
 };
 
-export const getUsers = async () => {
+export const getUsers = async (axiosInstanceWithAuth) => {
   try {
-    const res = await axiosInstanceWithAuth.get("/auth/users");
-    return res;
+    const res = await axiosInstanceWithAuth.get("/users");
+    return res.data;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const getUserById = async (id) => {
+export const getUserById = async (axiosInstanceWithAuth, id) => {
   try {
-    const res = await axiosInstanceWithAuth.get(`/auth/users/${id}`);
-    return res;
+    const res = await axiosInstanceWithAuth.get(`/users/${id}`);
+    return res.data;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const updateUser = async (id, data) => {
+export const updateUser = async (axiosInstanceWithAuth, id, data) => {
   try {
-    const res = await axiosInstanceWithAuth.patch(`/auth/users/${id}`, {
+    const res = await axiosInstanceWithAuth.patch(`/users/${id}`, {
       data,
     });
-    return res;
+    return res.data;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (axiosInstanceWithAuth, id) => {
   try {
-    const res = await axiosInstanceWithAuth.delete(`/auth/users/${id}`);
-    return res;
+    const res = await axiosInstanceWithAuth.delete(`/users/${id}`);
+    return res.data;
   } catch (error) {
     console.error(error);
     return null;

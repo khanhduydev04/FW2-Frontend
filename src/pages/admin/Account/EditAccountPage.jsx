@@ -1,17 +1,57 @@
-import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { getUserById, updateUser } from "../../../services/auth";
+import { toast } from "react-toastify";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useEffect, useState } from "react";
 
 const EditAccountPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const axiosInstanceWithAuth = useAxiosPrivate();
+  const { id } = useParams();
+  const [, setUser] = useState(null);
+  const navigate = useNavigate();
+  const schemaValidation = yup.object({
+    fullname: yup
+      .string()
+      .required("Thông tin bắt buộc. Vui lòng nhập đầy đủ."),
+    username: yup
+      .string()
+      .required("Thông tin bắt buộc. Vui lòng nhập đầy đủ."),
+  });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Thực hiện cập nhật tài khoản với dữ liệu đã hợp lệ
+  const {
+    handleSubmit,
+    reset,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schemaValidation),
+  });
+
+  const fetchUser = async () => {
+    const res = await getUserById(axiosInstanceWithAuth, id);
+    if (res) {
+      setUser(res.data);
+      reset({
+        fullname: res.data.fullname,
+        username: res.data.username,
+      });
+    }
   };
+
+  const onSubmit = async (data) => {
+    const res = await updateUser(axiosInstanceWithAuth, id, data);
+    if (res) {
+      toast.success("Cập nhật tài khoản thành công");
+      navigate("/admin/account");
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <div className="bg-white rounded-xl py-10 px-[66px]">
@@ -21,28 +61,27 @@ const EditAccountPage = () => {
             <h1 className="text-xl font-bold leading-6 text-gray-900 mb-5">
               Cập nhật tài khoản
             </h1>
-            <form onSubmit={handleSubmit(onSubmit)} id="editAccountForm">
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 mb-5">
                 <div className="sm:col-span-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="fullname"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    Tên người dùng
+                    Họ và tên
                   </label>
                   <div className="mt-2">
                     <input
                       type="text"
-                      id="name"
-                      {...register("name", { required: "Tên người dùng không được để trống" })}
-                      autoComplete="given-name"
+                      id="fullname"
+                      {...register("fullname")}
                       className={`block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ${
-                        errors.name ? "ring-red-500" : ""
+                        errors.fullname ? "ring-red-500" : ""
                       }`}
                     />
-                    {errors.name && (
-                      <p className="mt-2 text-sm text-red-600">
-                        {errors.name.message}
+                    {errors.fullname && (
+                      <p className="text-red-500 text-sm">
+                        {errors.fullname.message}
                       </p>
                     )}
                   </div>
@@ -58,66 +97,28 @@ const EditAccountPage = () => {
                     <input
                       type="text"
                       id="username"
-                      {...register("username", { required: "Username không được để trống" })}
-                      autoComplete="username"
+                      {...register("username")}
                       className={`block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ${
                         errors.username ? "ring-red-500" : ""
                       }`}
                     />
                     {errors.username && (
-                      <p className="mt-2 text-sm text-red-600">
+                      <p className="text-red-500 text-sm">
                         {errors.username.message}
                       </p>
                     )}
                   </div>
                 </div>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Email
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="email"
-                      id="email"
-                      {...register("email", { required: "Email không được để trống" })}
-                      autoComplete="email"
-                      className={`block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ${
-                        errors.email ? "ring-red-500" : ""
-                      }`}
-                    />
-                    {errors.email && (
-                      <p className="mt-2 text-sm text-red-600">
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Mô tả
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      id="description"
-                      {...register("description")}
-                      autoComplete="family-name"
-                      className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset"
-                    />
-                  </div>
-                </div>
               </div>
               <button
                 type="submit"
-                className="block rounded-md bg-green-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-500 transition-colors"
+                className="flex justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-700"
               >
-                Cập nhật
+                {isSubmitting ? (
+                  <div className="mx-auto w-5 h-5 border-2 border-white border-t-2 border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  "Cập nhật"
+                )}
               </button>
             </form>
           </div>
