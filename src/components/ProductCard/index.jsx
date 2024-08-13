@@ -15,7 +15,6 @@ const ProductCard = ({ product }) => {
             width="500"
             height="500"
           />
-          <div className="absolute bottom-0 left-0 flex h-[26px] w-full"></div>
         </div>
         <div className="p-2 pb-1 font-medium flex-1 flex flex-col justify-between">
           <div className="">

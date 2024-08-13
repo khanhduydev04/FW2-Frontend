@@ -1,6 +1,6 @@
 import axiosInstance from "../../config/api";
 
-export const getProducts = async (page = 1, limit = 5) => {
+export const getProducts = async (page = 1, limit = 8) => {
   try {
     const res = await axiosInstance.get(
       `/products?page=${page}&limit=${limit}`
