@@ -5,12 +5,14 @@ import { useDispatch } from "react-redux";
 import { authLogOut } from "../../store/reducers/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faDiagramNext, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isShowSearch, setIsShowSearch] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   let username = "";
   if (getTokens().accessToken) {
     username = jwtDecode(getTokens().accessToken).username || "";
@@ -27,7 +29,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-green-600">
+    <header className="bg-green-600 relative">
       <div className="container mx-auto grid grid-cols-[40px_1fr_40px] grid-rows-[40px] content-center pt-1.5 pb-2 md:grid-cols-[200px_1fr_270px] md:grid-rows-[56px] md:pt-4 md:pb-[44px]">
         <div className="grid place-content-start content-center md:hidden">
           <button
@@ -147,7 +149,9 @@ const Header = () => {
                   maxLength="200"
                   className="w-full text-ellipsis bg-transparent text-[#020b27] outline-none placeholder:text-text-tertiary placeholder-shown:text-ellipsis h-[28px] sm:h-[40px] text-body1 placeholder:text-sm peer"
                   defaultValue=""
+                  onClick={() => setIsShowSearch(true)}
                 />
+
                 <button className="ml-2 items-center h-[20px] w-[20px] shrink-0 text-[#4a4f63] hidden">
                   <svg
                     width="24"
@@ -219,6 +223,53 @@ const Header = () => {
         <NavLink to={"/san-pham"}>Thiết bị y tế</NavLink>
         <NavLink to={"/san-pham"}>Bệnh</NavLink>
         <NavLink to={"/san-pham"}>Góc sức khỏe</NavLink>
+      </div>
+
+      <div className={isShowSearch ? "absolute w-full min-h-screen bg-black bg-opacity-25 z-30 flex justify-center" : "hidden"}
+        onClick={() => { setIsShowSearch(false) }}>
+        <div className="w-[47%] me-[4.5%] rounded-lg bg-white top-[-80px] absolute opacity-100 p-4 z-30">
+          {isLoading ? (
+            <div className="">
+              <div className="mx-auto w-8 h-8 border-2 border-green-600 border-t-2 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <div className="">
+              <p className="font-medium pb-4 border-b">Sản phẩm bạn cần tìm</p>
+              <div className="flex justify-start gap-2 border-b py-3">
+                <img src="https://cdn.nhathuoclongchau.com.vn/unsafe/160x160/https://cms-prod.s3-sgn09.fptcloud.com/00000639_alphagan_5ml_7166_6103_large_0446171916.jpg" className="w-24 h-24 rounded-sm" alt="" />
+                <div className="">
+                  <p className="font-medium">Thuốc nhỏ mắt Alphagan P Allergan điều trị tăng nhãn áp (5ml)</p>
+                  <p className="text-gray-500">Cần tư vấn từ dược sĩ</p>
+                </div>
+              </div>
+
+              <div className="flex justify-start gap-2 border-b py-3">
+                <img src="https://cdn.nhathuoclongchau.com.vn/unsafe/160x160/https://cms-prod.s3-sgn09.fptcloud.com/00000639_alphagan_5ml_7166_6103_large_0446171916.jpg" className="w-24 h-24 rounded-sm" alt="" />
+                <div className="">
+                  <p className="font-medium">Thuốc nhỏ mắt Alphagan P Allergan điều trị tăng nhãn áp (5ml)</p>
+                  <p className="text-gray-500">Cần tư vấn từ dược sĩ</p>
+                </div>
+              </div>
+
+              <div className="flex justify-start gap-2 border-b py-3">
+                <img src="https://cdn.nhathuoclongchau.com.vn/unsafe/160x160/https://cms-prod.s3-sgn09.fptcloud.com/00000639_alphagan_5ml_7166_6103_large_0446171916.jpg" className="w-24 h-24 rounded-sm" alt="" />
+                <div className="">
+                  <p className="font-medium">Thuốc nhỏ mắt Alphagan P Allergan điều trị tăng nhãn áp (5ml)</p>
+                  <p className="text-gray-500">Cần tư vấn từ dược sĩ</p>
+                </div>
+              </div>
+
+              <div className="text-center mt-3">
+                <Link to={''} className="text-green-600 ">
+                  Xem tất cả <FontAwesomeIcon icon={faChevronRight} />
+                </Link>
+              </div>
+            </div>
+          )}
+
+
+        </div>
+
       </div>
     </header>
   );
