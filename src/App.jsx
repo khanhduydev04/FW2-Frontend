@@ -26,6 +26,7 @@ import RegisterPage from "./pages/auth/Resgister";
 import PayPage from "./pages/client/PayPage";
 import OderPage from "./pages/admin/Oder/OderPage";
 import ScrollToTop from "./components/Scroll";
+import OderDetailPage from "./pages/admin/Oder/OderDetailPage";
 
 const routes = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const routes = createBrowserRouter([
       {
         path: "quan-ly-don-hang",
         element: <OderPage />,
+      },
+      {
+        path: "quan-ly-don-hang/:id",
+        element: <OderDetailPage />,
       },
     ],
   },

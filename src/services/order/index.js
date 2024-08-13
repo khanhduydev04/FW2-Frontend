@@ -27,3 +27,14 @@ export const getOrderById = async (axiosInstanceWithAuth, id) => {
     return null;
   }
 };
+
+
+export const updateOrder = async (axiosInstanceWithAuth, id, orderData) => {
+  try {
+    const res = await axiosInstanceWithAuth.patch(`/orders/${id}`, orderData);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
