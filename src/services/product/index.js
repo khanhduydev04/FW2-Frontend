@@ -55,3 +55,12 @@ export const deleteProduct = async (axiosInstanceWithAuth, id) => {
     return null;
   }
 };
+export const deleteProductImage = async (axiosInstanceWithAuth, productId, imageId) => {
+  try {
+    const res = await axiosInstanceWithAuth.delete(`/products/${productId}/images/${imageId}`);
+    return res;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
